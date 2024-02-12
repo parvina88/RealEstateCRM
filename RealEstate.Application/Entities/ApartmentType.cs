@@ -1,14 +1,7 @@
 ﻿namespace RealEstate.Application.Entities;
 
-public enum ApartmentType
+public class ApartmentType
 {
-    Studio,
-    OneBedroom,
-    TwoBedroom,
-    ThreeBedroom,
-    Penthouse,
-    Duplex,
-    Loft,
-    GardenApartment,
-    Other
+    public Guid Id { get; set; }
+    public string Type { get; set; }
 }

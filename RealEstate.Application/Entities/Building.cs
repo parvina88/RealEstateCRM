@@ -3,7 +3,7 @@
 public class Building
 {
     public Guid Id { get; init; }
-    public required string Name { get; set; }
+    public string Name { get; set; }
     public string Address { get; set; }
     public int NumberOfFloors { get; set; }
     public double TotalArea { get; set; }
