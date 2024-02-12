@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealEstate.Api", "RealEstate.Api\RealEstate.Api.csproj", "{D359F749-3E8B-4F8A-A286-F1D71706F9DB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealEstate.Application", "RealEstate.Application\RealEstate.Application.csproj", "{997ADE8D-5BD2-466C-AC08-1F0E33DA8CAE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealEstate.Contract", "RealEstate.Contract\RealEstate.Contract.csproj", "{E60A3715-C76E-40CE-9175-06AEFF9DE28F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D359F749-3E8B-4F8A-A286-F1D71706F9DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D359F749-3E8B-4F8A-A286-F1D71706F9DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D359F749-3E8B-4F8A-A286-F1D71706F9DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D359F749-3E8B-4F8A-A286-F1D71706F9DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{997ADE8D-5BD2-466C-AC08-1F0E33DA8CAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{997ADE8D-5BD2-466C-AC08-1F0E33DA8CAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{997ADE8D-5BD2-466C-AC08-1F0E33DA8CAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{997ADE8D-5BD2-466C-AC08-1F0E33DA8CAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E60A3715-C76E-40CE-9175-06AEFF9DE28F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E60A3715-C76E-40CE-9175-06AEFF9DE28F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E60A3715-C76E-40CE-9175-06AEFF9DE28F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E60A3715-C76E-40CE-9175-06AEFF9DE28F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
