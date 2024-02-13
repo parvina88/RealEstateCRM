@@ -1,6 +1,7 @@
-﻿using RealEstate.Application.Entities;
+﻿using RealEstate.Application.Abstractions;
+using RealEstate.Domain.Entities;
 
-namespace RealEstate.Application.Repositories;
+namespace RealEstate.Infrastructure.Repositories;
 
 public class BuildingRepository : IBuildingRepository
 {

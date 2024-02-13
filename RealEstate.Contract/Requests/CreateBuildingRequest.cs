@@ -1,4 +1,4 @@
-﻿using RealEstate.Application.Entities;
+﻿using RealEstate.Domain.Enums;
 
 namespace RealEstate.Contract.Requests;
 
