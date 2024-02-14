@@ -1,11 +1,22 @@
-﻿namespace RealEstate.Domain.Entities;
+﻿using RealEstate.Domain.Enums;
+
+namespace RealEstate.Domain.Entities;
 
 public class Employee
 {
     public Guid Id { get; set; }
-    public required string FirstName { get; set; }
-    public required string LastName { get; set; }
+
+    public string FirstName { get; set; }
+
+    public string LastName { get; set; }
+
     public DateTime? DateOfBirth { get; set; }
+
     public Guid DepartmentId { get; set; }
-    public Guid PositionId { get; set; }
+    public virtual Department Department { get; set; }
+
+    public Position Position { get; set; }
+
+    public virtual ICollection<Deal> Deals { get; set; }
+
 }
