@@ -1,5 +1,4 @@
-﻿using RealEstate.Domain.Entities;
-using RealEstate.Domain.Enums;
+﻿using RealEstate.Domain.Enums;
 
 namespace RealEstate.Contract.Building;
 
@@ -12,5 +11,5 @@ public class SingleBuildingResponse
     public BuildingMaterial? BuildingMaterial { get; set; }
     public ApartmentClass? ApartmentClass { get; set; }
 
-    public virtual ICollection<Entrance> Entrances { get; set; }
+    //public virtual ICollection<Entrance> Entrances { get; set; }
 }

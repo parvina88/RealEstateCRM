@@ -1,6 +1,6 @@
 ﻿namespace RealEstate.Api
 {
-    public static class ApiEndPoints
+    public static class ApiEndpoints
     {
         private const string ApiBase = "api";
 

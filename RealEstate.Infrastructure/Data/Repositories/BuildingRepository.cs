@@ -1,4 +1,5 @@
-﻿using RealEstate.Application.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using RealEstate.Application.Data;
 using RealEstate.Domain.Entities;
 using RealEstate.Domain.Repositories;
 
@@ -15,28 +16,42 @@ public class BuildingRepository : IBuildingRepository
 
     public async Task<bool> CreateAsync(Building building, CancellationToken token = default)
     {
-        await _context.Buildings.AddAsync(building);
-        await _context.SaveChangesAsync();
-        return true;
+        _context.Buildings.Add(building);
+        var affectedRows = await _context.SaveChangesAsync();
+        return affectedRows > 0;
     }
 
-    public Task<Building?> GetAsync(Guid id)
+    public async Task<Building?> GetAsync(Guid id)
     {
-        throw new NotImplementedException();
+        return await _context.Buildings.FindAsync(id);
     }
 
-    public Task<IEnumerable<Building>> GetAllAsync()
+    public async Task<IEnumerable<Building>> GetAllAsync()
     {
-        throw new NotImplementedException();
+        return await _context.Buildings.ToListAsync();
     }
 
-    public Task<bool> UpdateAsync(Building building)
+    public async Task<bool> UpdateAsync(Building building)
     {
-        throw new NotImplementedException();
+        _context.Buildings.Update(building);
+        var affectedRows = await _context.SaveChangesAsync();
+
+        return affectedRows > 0;
     }
 
-    public Task<bool> DeleteAsync(Guid id)
+    public async Task<bool> DeleteAsync(Guid id)
     {
-        throw new NotImplementedException();
+        var buildingToDelete = await GetAsync(id);
+
+        if (buildingToDelete == null)
+            return false;
+
+        _context.Buildings.Remove(buildingToDelete);
+
+        var affectedRows = await _context.SaveChangesAsync();
+
+        return affectedRows > 0;
+
+
     }
 }

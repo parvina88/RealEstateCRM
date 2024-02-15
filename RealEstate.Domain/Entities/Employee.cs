@@ -18,5 +18,4 @@ public class Employee
     public Position Position { get; set; }
 
     public virtual ICollection<Deal> Deals { get; set; }
-
 }

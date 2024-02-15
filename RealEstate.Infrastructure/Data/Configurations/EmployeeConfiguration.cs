@@ -21,18 +21,12 @@ public class EmployeeConfiguration : IEntityTypeConfiguration<Employee>
         builder.Property(e => e.DateOfBirth)
             .HasColumnType("date");
 
-        builder.Property(e => e.DepartmentId)
-            .IsRequired();
-
-        builder.Property(e => e.Position)
-            .IsRequired();
-
         builder.Property(e => e.Position)
             .IsRequired()
             .HasConversion<string>();
 
         builder.HasOne(e => e.Department)
-            .WithMany()
+            .WithMany(d => d.Employees)
             .HasForeignKey(e => e.DepartmentId)
             .IsRequired()
             .OnDelete(DeleteBehavior.Restrict);
