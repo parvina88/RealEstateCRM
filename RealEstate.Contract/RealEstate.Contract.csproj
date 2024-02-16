@@ -8,14 +8,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\RealEstate.Application\RealEstate.Application.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
       <Folder Include="Apartment" />
       <Folder Include="Customer" />
       <Folder Include="Employee" />
       <Folder Include="Entrance" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\RealEstate.Domain\RealEstate.Domain.csproj" />
     </ItemGroup>
 
 </Project>

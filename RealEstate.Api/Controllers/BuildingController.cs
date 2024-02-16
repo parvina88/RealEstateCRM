@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RealEstate.Api.Mapping;
 using RealEstate.Application.Services;
 using RealEstate.Contract.Building;
+using RealEstate.Application.Mapping;
 
 namespace RealEstate.Api.Controllers
 {
@@ -41,10 +41,37 @@ namespace RealEstate.Api.Controllers
             return Ok(response);
         }
 
-        [HttpPut(ApiEndpoints.Building.Update)]
-        public async Task<IActionResult> Update([FromBody] UpdateBuildingRequest request, CancellationToken token = default)
+        [HttpGet(ApiEndpoints.Building.GetAll)]
+        public async Task<IActionResult> GetAll()
         {
+            var buildings = await _service.GetAllAsync();
+            var response = buildings.MapToResponse();
+            return Ok(response);
+        }
 
+        [HttpPut(ApiEndpoints.Building.Update)]
+        public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateBuildingRequest request, CancellationToken token = default)
+        {
+            var building = request.MapToBuilding(id);
+            var updatedBuilding = await _service.UpdateAsync(building);
+
+            if (!updatedBuilding)
+                return NotFound();
+
+            var response = building.MapToResponse();
+
+            return Ok(response);
+        }
+
+        [HttpDelete(ApiEndpoints.Building.Delete)]
+        public async Task<IActionResult> Delete([FromRoute] Guid id)
+        {
+            var deletedBuilding = await _service.DeleteAsync(id);
+
+            if(!deletedBuilding)
+                return NotFound();
+
+            return Ok();
         }
     }
 }
