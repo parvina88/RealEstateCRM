@@ -10,6 +10,4 @@ public class SingleBuildingResponse
     public int YearOfConstruction { get; set; }
     public BuildingMaterial? BuildingMaterial { get; set; }
     public ApartmentClass? ApartmentClass { get; set; }
-
-    //public virtual ICollection<Entrance> Entrances { get; set; }
 }

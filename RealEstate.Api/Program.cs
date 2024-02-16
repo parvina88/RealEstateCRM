@@ -1,3 +1,4 @@
+using RealEstate.Api.Mapping;
 using RealEstate.Application;
 using RealEstate.Infrastructure;
 
@@ -11,6 +12,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 
 builder.Services.AddInfrastructure(config);
+builder.Services.AddApplication();
 
 var app = builder.Build();
 
@@ -22,6 +24,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseMiddleware<ValidationMappingMiddleware>();
 app.MapControllers();
 
 app.Run();

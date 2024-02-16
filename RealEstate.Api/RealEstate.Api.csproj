@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
@@ -19,8 +19,11 @@
 
     <ItemGroup>
       <ProjectReference Include="..\RealEstate.Application\RealEstate.Application.csproj" />
-      <ProjectReference Include="..\RealEstate.Contract\RealEstate.Contract.csproj" />
       <ProjectReference Include="..\RealEstate.Infrastructure\RealEstate.Infrastructure.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EditorConfigFiles Remove="D:\Projects\RealEstateCRM\RealEstate.Api\Mapping\.editorconfig" />
     </ItemGroup>
 
 </Project>

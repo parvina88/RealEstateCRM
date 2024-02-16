@@ -1,4 +1,5 @@
-﻿using RealEstate.Domain.Entities;
+﻿using FluentValidation;
+using RealEstate.Domain.Entities;
 using RealEstate.Domain.Repositories;
 
 namespace RealEstate.Application.Services;
@@ -6,6 +7,7 @@ namespace RealEstate.Application.Services;
 public class BuildingService : IBuildingService
 {
     private readonly IBuildingRepository _buildingRepository;
+    private readonly IValidator<Building> _validator;
 
     public BuildingService(IBuildingRepository buildingRepository)
     {
@@ -14,6 +16,7 @@ public class BuildingService : IBuildingService
 
     public async Task<bool> CreateAsync(Building building, CancellationToken token = default)
     {
+        await _validator.ValidateAndThrowAsync(building);
         return await _buildingRepository.CreateAsync(building, token);
     }
 
@@ -34,6 +37,7 @@ public class BuildingService : IBuildingService
 
     public async Task<bool> UpdateAsync(Building building)
     {
+        await _validator.ValidateAndThrowAsync(building);
         return await _buildingRepository.UpdateAsync(building);
     }
 }
