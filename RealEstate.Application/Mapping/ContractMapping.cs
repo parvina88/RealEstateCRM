@@ -39,11 +39,10 @@ public static class ContractMapping
         };
     }
 
-    public static Building MapToBuilding(this UpdateBuildingRequest request, Guid id)
+    public static Building MapToBuilding(this UpdateBuildingRequest request)
     {
         return new Building
         {
-            Id = id,
             Name = request.Name,
             Address = request.Address,
             YearOfConstruction = request.YearOfConstruction,

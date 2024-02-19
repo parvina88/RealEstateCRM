@@ -4,7 +4,7 @@ using RealEstate.Application.Services;
 namespace RealEstate.Api.Controllers;
 
 [ApiController]
-public class ApartmentController : ControllerBase
+public class ApartmentController : ApiControllerBase
 {
     private readonly IBuildingService _service;
 
