@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using RealEstate.Contract;
 
-namespace RealEstate.Api.Mapping;
+namespace RealEstate.Api.Middleware;
 
 public class ValidationMappingMiddleware
 {
@@ -22,12 +22,14 @@ public class ValidationMappingMiddleware
         {
 
             context.Response.StatusCode = 400;
-            var validationFailureResponse = new ValidationFailureResponse() { 
-                Errors = ex.Errors.Select(x => new ValidationResponse { 
+            var validationFailureResponse = new ValidationFailureResponse()
+            {
+                Errors = ex.Errors.Select(x => new ValidationResponse
+                {
                     PropertyName = x.PropertyName,
                     Message = x.ErrorMessage
-                    })
-                };
+                })
+            };
 
             await context.Response.WriteAsJsonAsync(validationFailureResponse);
         }

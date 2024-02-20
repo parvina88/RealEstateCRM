@@ -1,8 +1,9 @@
-﻿using RealEstate.Domain.Enums;
+﻿using MediatR;
+using RealEstate.Domain.Enums;
 
 namespace RealEstate.Contract.Building;
 
-public class CreateBuildingRequest
+public record CreateBuildingRequest : IRequest<SingleBuildingResponse>
 {
     public string Name { get; set; }
     public string Address { get; set; }

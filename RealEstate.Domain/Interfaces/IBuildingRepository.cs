@@ -1,8 +1,8 @@
 ﻿using RealEstate.Domain.Entities;
 
-namespace RealEstate.Application.Services;
+namespace RealEstate.Domain.Interfaces;
 
-public interface IBuildingService
+public interface IBuildingRepository
 {
     Task<bool> CreateAsync(Building building, CancellationToken token = default);
     Task<Building?> GetAsync(Guid id);

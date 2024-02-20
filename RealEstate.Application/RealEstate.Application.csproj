@@ -6,7 +6,9 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="AutoMapper" Version="13.0.1" />
 		<PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.9.0" />
+		<PackageReference Include="MediatR" Version="12.2.0" />
 		<PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.5" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.1" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="8.0.1" />
@@ -16,6 +18,11 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\RealEstate.Contract\RealEstate.Contract.csproj" />
 	  <ProjectReference Include="..\RealEstate.Domain\RealEstate.Domain.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Entrances\Commands\DeleteEntrance\" />
+	  <Folder Include="Entrances\Commands\UpdateEntrance\" />
 	</ItemGroup>
 
 </Project>

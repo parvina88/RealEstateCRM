@@ -2,7 +2,7 @@
 
 namespace RealEstate.Contract.Building;
 
-public class SingleBuildingResponse
+public record SingleBuildingResponse
 {
     public Guid Id { get; init; }
     public string Name { get; set; }

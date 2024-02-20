@@ -1,4 +1,4 @@
-using RealEstate.Api.Mapping;
+using RealEstate.Api.Middleware;
 using RealEstate.Application;
 using RealEstate.Infrastructure;
 
@@ -11,8 +11,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 
-builder.Services.AddInfrastructure(config);
-builder.Services.AddApplication();
+builder.Services
+    .AddInfrastructure(config)
+    .AddApplication();
 
 var app = builder.Build();
 
