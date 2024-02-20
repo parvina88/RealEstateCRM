@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using RealEstate.Contract.Building;
-using RealEstate.Domain.Repositories;
+using RealEstate.Domain.Interfaces;
 
 namespace RealEstate.Application.Buildings.Commands.DeleteBuilding;
 

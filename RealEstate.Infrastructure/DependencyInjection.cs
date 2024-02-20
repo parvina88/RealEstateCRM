@@ -2,10 +2,9 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RealEstate.Application.Data;
-using RealEstate.Application.Services;
-using RealEstate.Domain.Repositories;
+using RealEstate.Domain.Interfaces;
 using RealEstate.Infrastructure.Data;
-using RealEstate.Infrastructure.Data.Repositories;
+using RealEstate.Infrastructure.Repositories;
 
 namespace RealEstate.Infrastructure;
 
@@ -15,8 +14,7 @@ public static class DependencyInjection
     {
         services.AddScoped<IApplicationDbInitializer, ApplicationDbInitializer>();
         services.AddScoped<IBuildingRepository, BuildingRepository>();
-        services.AddScoped<IBuildingService, BuildingService>();
-
+        services.AddScoped<IEntranceRepository, EntranceRepository>();
 
         services.AddDbContext<IApplicationDbContext, ApplicationDbContext>(options =>
         {

@@ -1,21 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RealEstate.Application.Services;
 using RealEstate.Contract.Building;
-using RealEstate.Application.Mapping;
-using RealEstate.Application.Buildings.Queries.GetBuildingDetails;
 
 namespace RealEstate.Api.Controllers
 {
     [ApiController]
     public class BuildingController : ApiControllerBase
     {
-        private readonly IBuildingService _service;
-
-        public BuildingController(IBuildingService service)
-        {
-            _service = service;
-        }
-
         [HttpPost(ApiEndpoints.Building.Create)]
         public async Task<IActionResult> Create([FromBody] CreateBuildingRequest request, CancellationToken token)
         {
@@ -24,14 +14,19 @@ namespace RealEstate.Api.Controllers
         }
 
         [HttpGet(ApiEndpoints.Building.Get)]
-        public async Task<SingleBuildingResponse> Get([FromRoute] Guid id, CancellationToken token)
+        public async Task<IActionResult> Get([FromRoute] Guid id, CancellationToken token)
         {
             var query = new GetSingleBuildingQuery()
             {
                 BuildingId = id
             };
 
-            return await Sender.Send(query, token);
+            var response = await Sender.Send(query, token);
+
+            if (response == null)
+                return NotFound();
+
+            return Ok(response);
         }
 
         [HttpGet(ApiEndpoints.Building.GetAll)]
@@ -59,7 +54,7 @@ namespace RealEstate.Api.Controllers
             if(!response)
                 return NotFound();
 
-            return Ok();
+            return Ok(response);
         }
     }
 }

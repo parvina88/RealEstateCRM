@@ -1,6 +1,6 @@
 ﻿using RealEstate.Domain.Entities;
 
-namespace RealEstate.Domain.Repositories;
+namespace RealEstate.Domain.Interfaces;
 
 public interface IBuildingRepository
 {

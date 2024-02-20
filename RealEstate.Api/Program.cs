@@ -1,4 +1,4 @@
-using RealEstate.Api.Mapping;
+using RealEstate.Api.Middleware;
 using RealEstate.Application;
 using RealEstate.Infrastructure;
 

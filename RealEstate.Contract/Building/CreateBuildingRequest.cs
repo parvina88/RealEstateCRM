@@ -3,7 +3,7 @@ using RealEstate.Domain.Enums;
 
 namespace RealEstate.Contract.Building;
 
-public class CreateBuildingRequest : IRequest<SingleBuildingResponse>
+public record CreateBuildingRequest : IRequest<SingleBuildingResponse>
 {
     public string Name { get; set; }
     public string Address { get; set; }
