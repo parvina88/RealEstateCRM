@@ -1,6 +1,6 @@
 ﻿namespace RealEstate.Contract.Entrance;
 
-public class SingleEntranceResponse
+public record SingleEntranceResponse
 {
     public Guid Id { get; set; }
     public string Number { get; set; }

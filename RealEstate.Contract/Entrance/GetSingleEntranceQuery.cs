@@ -1,9 +1,5 @@
 ﻿using MediatR;
-using RealEstate.Contract.Entrance;
 
-namespace RealEstate.Contract.Building;
+namespace RealEstate.Contract.Entrance;
 
-public record GetSingleEntranceQuery : IRequest<SingleEntranceResponse>
-{
-    public Guid EntranceId { get; set; }
-}
+public record GetSingleEntranceQuery(Guid Id) : IRequest<SingleEntranceResponse>;

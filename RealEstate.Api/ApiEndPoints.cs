@@ -22,6 +22,17 @@ public static class ApiEndpoints
         public const string GetAll = Base;
         public const string Update = $"{Base}/{{id:guid}}";
         public const string Delete = $"{Base}/{{id:guid}}";
+    }
 
+    public static class Apartment
+    {
+        private const string Base = $"{ApiBase}/apartments";
+        public const string Create = Base;
+        public const string Get = $"{Base}/{{id:guid}}";
+        public const string GetAll = Base;
+        public const string GetAllByEntrance = $"{Base}/entrance/{{id:guid}}";
+        public const string GetAllByStatus = $"{Base}/status/{{status}}";
+        public const string Update = $"{Base}/{{id:guid}}";
+        public const string Delete = $"{Base}/{{id:guid}}";
     }
 }

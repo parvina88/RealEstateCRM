@@ -5,16 +5,11 @@ using RealEstate.Domain.Interfaces;
 
 namespace RealEstate.Infrastructure.Repositories;
 
-public class BuildingRepository : IBuildingRepository
+public class BuildingRepository(IApplicationDbContext context) : IBuildingRepository
 {
-    private readonly IApplicationDbContext _context;
+    private readonly IApplicationDbContext _context = context;
 
-    public BuildingRepository(IApplicationDbContext context)
-    {
-        _context = context;
-    }
-
-    public async Task<bool> CreateAsync(Building building, CancellationToken token = default)
+    public async Task<bool> CreateAsync(Building building)
     {
         _context.Buildings.Add(building);
         var affectedRows = await _context.SaveChangesAsync();
@@ -23,7 +18,7 @@ public class BuildingRepository : IBuildingRepository
 
     public async Task<Building?> GetAsync(Guid id)
     {
-        return await _context.Buildings.FindAsync(id);
+        return await _context.Buildings.FirstOrDefaultAsync(b => b.Id == id);
     }
 
     public async Task<IEnumerable<Building>> GetAllAsync()
@@ -34,24 +29,13 @@ public class BuildingRepository : IBuildingRepository
     public async Task<bool> UpdateAsync(Building building)
     {
         _context.Buildings.Update(building);
-        var affectedRows = await _context.SaveChangesAsync();
-
-        return affectedRows > 0;
+        return await _context.SaveChangesAsync() > 0;
     }
 
-    public async Task<bool> DeleteAsync(Guid id)
+    public async Task<bool> DeleteAsync(Building building)
     {
-        var buildingToDelete = await GetAsync(id);
+        _context.Buildings.Remove(building);
 
-        if (buildingToDelete == null)
-            return false;
-
-        _context.Buildings.Remove(buildingToDelete);
-
-        var affectedRows = await _context.SaveChangesAsync();
-
-        return affectedRows > 0;
-
-
+        return await _context.SaveChangesAsync() > 0;
     }
 }

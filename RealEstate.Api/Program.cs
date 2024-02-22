@@ -1,4 +1,3 @@
-using RealEstate.Api.Middleware;
 using RealEstate.Application;
 using RealEstate.Infrastructure;
 
@@ -25,7 +24,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseMiddleware<ValidationMappingMiddleware>();
 app.MapControllers();
 
 app.Run();

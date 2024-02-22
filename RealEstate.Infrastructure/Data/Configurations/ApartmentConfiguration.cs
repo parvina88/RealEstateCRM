@@ -27,12 +27,10 @@ public class ApartmentConfiguration : IEntityTypeConfiguration<Apartment>
             .HasPrecision(18, 2);
 
         builder.Property(a => a.Type)
-            .IsRequired()
-            .HasConversion<string>();
+            .IsRequired();
 
         builder.Property(a => a.Status)
-            .IsRequired()
-            .HasConversion<string>();
+            .IsRequired();
 
         builder.HasOne(a => a.Entrance)
             .WithMany(e => e.Apartments)

@@ -23,10 +23,7 @@ namespace RealEstate.Api.Controllers
 
             var response = await Sender.Send(query, token);
 
-            if (response == null)
-                return NotFound();
-
-            return Ok(response);
+            return response == null ? NotFound() : Ok(response);
         }
 
         [HttpGet(ApiEndpoints.Building.GetAll)]
@@ -39,10 +36,17 @@ namespace RealEstate.Api.Controllers
         }
 
         [HttpPut(ApiEndpoints.Building.Update)]
-        public async Task<SingleBuildingResponse> Update([FromRoute] Guid id, [FromBody] UpdateBuildingRequest request, CancellationToken token = default)
+        public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateBuildingRequest request)
         {
+            if (request == null)
+            {
+                return BadRequest("Invalid request data.");
+            }
+
             request.Id = id;
-            return await Sender.Send(request);
+            var response = await Sender.Send(request);
+
+            return response == null ? NotFound() : Ok(response);
         }
 
         [HttpDelete(ApiEndpoints.Building.Delete)]
@@ -51,10 +55,7 @@ namespace RealEstate.Api.Controllers
             var request = new DeleteBuildingRequest(id);
             var response = await Sender.Send(request);
 
-            if(!response)
-                return NotFound();
-
-            return Ok(response);
+            return response ? Ok() : NotFound($"Building with ID {id} not found.");
         }
     }
 }

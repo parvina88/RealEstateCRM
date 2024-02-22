@@ -22,8 +22,7 @@ public class EmployeeConfiguration : IEntityTypeConfiguration<Employee>
             .HasColumnType("date");
 
         builder.Property(e => e.Position)
-            .IsRequired()
-            .HasConversion<string>();
+            .IsRequired();
 
         builder.HasOne(e => e.Department)
             .WithMany(d => d.Employees)

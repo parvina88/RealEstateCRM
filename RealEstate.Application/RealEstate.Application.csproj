@@ -20,9 +20,4 @@
 	  <ProjectReference Include="..\RealEstate.Domain\RealEstate.Domain.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="Entrances\Commands\DeleteEntrance\" />
-	  <Folder Include="Entrances\Commands\UpdateEntrance\" />
-	</ItemGroup>
-
 </Project>

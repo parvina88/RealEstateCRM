@@ -1,20 +1,19 @@
 ﻿using MediatR;
+using RealEstate.Application.Common.Exceptions;
 using RealEstate.Contract.Building;
+using RealEstate.Domain.Entities;
 using RealEstate.Domain.Interfaces;
 
 namespace RealEstate.Application.Buildings.Commands.DeleteBuilding;
 
-public class DeleteBuildingCommandHandler : IRequestHandler<DeleteBuildingRequest, bool>
+public class DeleteBuildingCommandHandler(IBuildingRepository buildingRepository) : IRequestHandler<DeleteBuildingRequest, bool>
 {
-    private readonly IBuildingRepository _buildingRepository;
-
-    public DeleteBuildingCommandHandler(IBuildingRepository buildingRepository)
-    {
-        _buildingRepository = buildingRepository;
-    }
+    private readonly IBuildingRepository _buildingRepository = buildingRepository;
 
     public async Task<bool> Handle(DeleteBuildingRequest request, CancellationToken cancellationToken)
     {
-        return await _buildingRepository.DeleteAsync(request.Id);
+        var building = await _buildingRepository.GetAsync(request.Id) ?? throw new NotFoundException(nameof(Building), request.Id);
+        
+        return await _buildingRepository.DeleteAsync(building);
     }
 }

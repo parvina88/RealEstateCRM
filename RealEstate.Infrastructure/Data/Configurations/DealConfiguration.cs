@@ -17,8 +17,7 @@ public class DealConfiguration : IEntityTypeConfiguration<Deal>
             .HasMaxLength(500);
 
         builder.Property(d => d.Status)
-            .IsRequired()
-            .HasConversion<string>();
+            .IsRequired();
 
         builder.HasOne(d => d.Apartment)
             .WithMany()
