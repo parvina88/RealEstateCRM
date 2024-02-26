@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using RealEstate.Contract.Apartment;
-using RealEstate.Domain.Entities;
 using RealEstate.Domain.Exceptions;
 using RealEstate.Domain.Interfaces;
 
@@ -12,7 +11,7 @@ public class DeleteApartmentCommandHandler(IApartmentRepository apartmentReposit
 
     public async Task<bool> Handle(DeleteApartmentRequest request, CancellationToken cancellationToken)
     {
-        var apartment = await _apartmentRepository.GetAsync(request.Id) ?? throw new NotFoundException(nameof(Apartment), request.Id);
+        var apartment = await _apartmentRepository.GetAsync(request.Id) ?? throw new ValidationFailedException("Apartment", nameof(request.Id));
         return await _apartmentRepository.DeleteAsync(apartment);
     }
 }

@@ -3,6 +3,7 @@
 public class ValidationFailedException : Exception
 {
     public ErrorResponse ErrorResponse { get; }
+
     public ValidationFailedException(ErrorResponse errorResponse)
         : base(string.Join(',', errorResponse.Errors.Select(err => err.Message)))
     {

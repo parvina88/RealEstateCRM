@@ -22,7 +22,7 @@ public class CreateApartmentCommandHandler : IRequestHandler<CreateApartmentRequ
 
     public async Task<SingleApartmentResponse> Handle(CreateApartmentRequest request, CancellationToken cancellationToken)
     {
-        var entrance = await _entranceRepository.GetAsync(request.EntranceId) ?? throw new NotFoundException(nameof(Entrance), request.EntranceId);
+        var entrance = await _entranceRepository.GetAsync(request.EntranceId) ?? throw new ValidationFailedException("Entrance", nameof(request.EntranceId));
 
         var apartment = new Apartment()
         {
