@@ -1,4 +1,4 @@
-﻿namespace RealEstate.Application.Common.Exceptions;
+﻿namespace RealEstate.Domain.Exceptions;
 
 public class ValidationFailedException : Exception
 {

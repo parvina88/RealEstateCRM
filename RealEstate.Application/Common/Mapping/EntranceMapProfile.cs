@@ -11,8 +11,5 @@ public class EntranceMapProfile : Profile
     {
         CreateMap<CreateEntranceRequest, Entrance>();
         CreateMap<GetEntrancesQuery, EntrancesResponse>();
-
-        CreateMap<Entrance, SingleEntranceResponse>()
-            .ForMember(getEntrance => getEntrance.Building, opt => opt.MapFrom(building => building.Building.Name));
     }
 }

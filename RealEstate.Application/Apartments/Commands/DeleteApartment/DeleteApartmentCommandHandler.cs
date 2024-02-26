@@ -1,7 +1,7 @@
 ﻿using MediatR;
-using RealEstate.Application.Common.Exceptions;
 using RealEstate.Contract.Apartment;
 using RealEstate.Domain.Entities;
+using RealEstate.Domain.Exceptions;
 using RealEstate.Domain.Interfaces;
 
 namespace RealEstate.Application.Apartments.Commands.DeleteApartment;

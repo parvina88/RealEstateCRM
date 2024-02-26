@@ -1,7 +1,7 @@
 ﻿using MediatR;
-using RealEstate.Application.Common.Exceptions;
 using RealEstate.Contract.Entrance;
 using RealEstate.Domain.Entities;
+using RealEstate.Domain.Exceptions;
 using RealEstate.Domain.Interfaces;
 
 namespace RealEstate.Application.Entrances.Commands.DeleteEntrance;

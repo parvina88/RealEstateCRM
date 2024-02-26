@@ -7,8 +7,8 @@ public interface IApartmentRepository
 {
     Task<IEnumerable<Apartment>> GetAllAsync();
     Task<Apartment> GetAsync(Guid id);
-    Task<IEnumerable<Apartment>> GetApartmentsByEntranceAsync(Guid entranceId);
-    Task<IEnumerable<Apartment>> GetApartmentsByStatusAsync(ApartmentStatus status);
+    Task<IEnumerable<Apartment>> GetAllByEntranceAsync(Guid entranceId);
+    Task<IEnumerable<Apartment>> GetAllByStatusAsync(ApartmentStatus status);
     Task<Apartment> CreateAsync(Apartment apartment);
     Task<bool> UpdateAsync(Apartment apartment);
     Task<bool> DeleteAsync(Apartment apartment);

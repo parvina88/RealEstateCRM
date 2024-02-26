@@ -21,3 +21,4 @@ public class GetEntrancesQueryHandler(IEntranceRepository entranceRepository, IM
         };
     }
 }
+

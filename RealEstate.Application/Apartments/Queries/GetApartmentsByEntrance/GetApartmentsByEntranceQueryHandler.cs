@@ -12,7 +12,7 @@ public class GetApartmentsByEntranceQueryHandler(IApartmentRepository apartmentR
 
     public async Task<ApartmentsResponse> Handle(GetApartmentsByEntranceQuery request, CancellationToken cancellationToken)
     {
-        var apartments = await _apartmentRepository.GetApartmentsByEntranceAsync(request.EntranceId);
+        var apartments = await _apartmentRepository.GetAllByEntranceAsync(request.EntranceId);
 
         return new ApartmentsResponse()
         {

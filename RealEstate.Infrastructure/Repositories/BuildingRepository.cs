@@ -12,8 +12,7 @@ public class BuildingRepository(IApplicationDbContext context) : IBuildingReposi
     public async Task<bool> CreateAsync(Building building)
     {
         _context.Buildings.Add(building);
-        var affectedRows = await _context.SaveChangesAsync();
-        return affectedRows > 0;
+        return await _context.SaveChangesAsync() > 0;
     }
 
     public async Task<Building?> GetAsync(Guid id)

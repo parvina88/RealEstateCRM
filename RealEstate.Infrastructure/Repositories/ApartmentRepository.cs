@@ -23,12 +23,12 @@ public class ApartmentRepository(IApplicationDbContext context) : IApartmentRepo
         return await _context.Apartments.ToListAsync();
     }
 
-    public async Task<IEnumerable<Apartment>> GetApartmentsByEntranceAsync(Guid entranceId)
+    public async Task<IEnumerable<Apartment>> GetAllByEntranceAsync(Guid entranceId)
     {
         return await _context.Apartments.Where(a => a.EntranceId == entranceId).ToListAsync();
     }
 
-    public async Task<IEnumerable<Apartment>> GetApartmentsByStatusAsync(ApartmentStatus status)
+    public async Task<IEnumerable<Apartment>> GetAllByStatusAsync(ApartmentStatus status)
     {
         return await _context.Apartments.Where(a => a.Status == status).ToListAsync();
     }

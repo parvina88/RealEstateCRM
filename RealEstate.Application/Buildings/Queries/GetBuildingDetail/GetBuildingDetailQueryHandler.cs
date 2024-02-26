@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using MediatR;
-using RealEstate.Application.Common.Exceptions;
 using RealEstate.Contract.Building;
 using RealEstate.Domain.Entities;
+using RealEstate.Domain.Exceptions;
 using RealEstate.Domain.Interfaces;
 
 namespace RealEstate.Application.Buildings.Queries.GetBuildingDetails
