@@ -12,7 +12,7 @@ public class DeleteBuildingCommandHandler(IBuildingRepository buildingRepository
 
     public async Task<bool> Handle(DeleteBuildingRequest request, CancellationToken cancellationToken)
     {
-        var building = await _buildingRepository.GetAsync(request.Id) ?? throw new NotFoundException(nameof(Building), request.Id);
+        var building = await _buildingRepository.GetAsync(request.Id, cancellationToken) ?? throw new NotFoundException(nameof(Building), request.Id);
         
         return await _buildingRepository.DeleteAsync(building);
     }

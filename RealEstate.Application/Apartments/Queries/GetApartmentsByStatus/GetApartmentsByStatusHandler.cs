@@ -13,7 +13,7 @@ public class GetApartmentsByStatusHandler(IApartmentRepository apartmentReposito
 
     public async Task<ApartmentsResponse> Handle(GetApartmentsByStatusQuery request, CancellationToken cancellationToken)
     {
-        IEnumerable<Apartment> apartments = await _apartmentRepository.GetAllByStatusAsync(request.Status);
+        IEnumerable<Apartment> apartments = await _apartmentRepository.GetAllByStatusAsync(request.Status, cancellationToken);
 
         return new ApartmentsResponse()
         {

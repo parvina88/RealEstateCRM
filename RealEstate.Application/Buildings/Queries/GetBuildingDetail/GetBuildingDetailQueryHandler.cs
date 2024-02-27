@@ -14,7 +14,7 @@ namespace RealEstate.Application.Buildings.Queries.GetBuildingDetails
 
         public async Task<SingleBuildingResponse> Handle(GetSingleBuildingQuery request, CancellationToken cancellationToken)
         {
-            var building = await _buildingRepository.GetAsync(request.BuildingId) ?? throw new NotFoundException(nameof(Building), request.BuildingId);
+            var building = await _buildingRepository.GetAsync(request.BuildingId, cancellationToken) ?? throw new NotFoundException(nameof(Building), request.BuildingId);
 
             return _mapper.Map<SingleBuildingResponse>(building);
         }

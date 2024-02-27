@@ -9,13 +9,14 @@ namespace RealEstate.Application.Tests.Apartments.Commands
 {
     public class DeleteApartmentCommandHandlerTests
     {
+        private readonly CancellationToken _token = CancellationToken.None;
+
         [Fact]
         public async Task Handle_ValidRequest_DeletesApartment()
         {
             // Arrange
             var apartmentRepositoryMock = new Mock<IApartmentRepository>();
             var request = new DeleteApartmentRequest(Guid.NewGuid());
-
             var apartment = new Apartment
             {
                 Id = request.Id,
@@ -28,17 +29,17 @@ namespace RealEstate.Application.Tests.Apartments.Commands
                 Status = ApartmentStatus.Available
             };
 
-            apartmentRepositoryMock.Setup(repo => repo.GetAsync(request.Id)).ReturnsAsync(apartment);
-            apartmentRepositoryMock.Setup(repo => repo.DeleteAsync(apartment)).ReturnsAsync(true);
+            apartmentRepositoryMock.Setup(repo => repo.GetAsync(request.Id, _token)).ReturnsAsync(apartment);
+            apartmentRepositoryMock.Setup(repo => repo.DeleteAsync(apartment, _token)).ReturnsAsync(true);
 
             var handler = new DeleteApartmentCommandHandler(apartmentRepositoryMock.Object);
 
             // Act
-            var result = await handler.Handle(request, CancellationToken.None);
+            var result = await handler.Handle(request, _token);
 
             // Assert
             Assert.True(result);
-            apartmentRepositoryMock.Verify(repo => repo.DeleteAsync(apartment), Times.Once);
+            apartmentRepositoryMock.Verify(repo => repo.DeleteAsync(apartment, _token), Times.Once);
         }
 
 
@@ -50,12 +51,12 @@ namespace RealEstate.Application.Tests.Apartments.Commands
             var request = new DeleteApartmentRequest(apartmentId);
 
             var apartmentRepositoryMock = new Mock<IApartmentRepository>();
-            apartmentRepositoryMock.Setup(repo => repo.GetAsync(apartmentId)).ReturnsAsync((Apartment)null);
+            apartmentRepositoryMock.Setup(repo => repo.GetAsync(apartmentId, _token)).ReturnsAsync((Apartment)null);
 
             var handler = new DeleteApartmentCommandHandler(apartmentRepositoryMock.Object);
 
             // Act & Assert
-            await Assert.ThrowsAsync<NotFoundException>(() => handler.Handle(request, CancellationToken.None));
+            await Assert.ThrowsAsync<NotFoundException>(() => handler.Handle(request, _token));
         }
     }
 }

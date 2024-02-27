@@ -22,20 +22,20 @@ public class CreateEntranceCommandHandler : IRequestHandler<CreateEntranceReques
 
     public async Task<SingleEntranceResponse> Handle(CreateEntranceRequest request, CancellationToken cancellationToken)
     {
-        var building = await _buildingRepository.GetAsync(request.BuildingId) ?? throw new NotFoundException(nameof(Building), request.BuildingId);
+        var building = await _buildingRepository.GetAsync(request.BuildingId, cancellationToken) ?? throw new NotFoundException(nameof(Building), request.BuildingId);
 
         var entrance = new Entrance()
         {
             Id = Guid.NewGuid(),
             Number = request.Number,
             NumberOfFloors = request.NumberOfFloors,
-            NumberOfApartmentsPerFloor = request.NumberOfApartmentsOnFloor,
+            NumberOfApartmentsPerFloor = request.NumberOfApartmentsPerFloor,
             CeilingHeight = request.CeilingHeight,
             HasLift = request.HasLift,
             BuildingId = building.Id
         };
 
-        await _entranceRepository.CreateAsync(entrance);
+        await _entranceRepository.CreateAsync(entrance, cancellationToken);
 
         return _mapper.Map<SingleEntranceResponse>(entrance);
     }

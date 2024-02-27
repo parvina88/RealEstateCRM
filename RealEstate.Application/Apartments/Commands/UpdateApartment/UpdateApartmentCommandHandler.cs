@@ -14,7 +14,7 @@ public class UpdateApartmentCommandHandler(IApartmentRepository apartmentReposit
 
     public async Task<SingleApartmentResponse> Handle(UpdateApartmentRequest request, CancellationToken cancellationToken)
     {
-        var apartment = await _apartmentRepository.GetAsync(request.Id) ?? throw new NotFoundException(nameof(Apartment), request.Id);
+        var apartment = await _apartmentRepository.GetAsync(request.Id, cancellationToken) ?? throw new NotFoundException(nameof(Apartment), request.Id);
 
         apartment.Number = request.Number;
         apartment.Floor = request.Floor;
@@ -26,7 +26,7 @@ public class UpdateApartmentCommandHandler(IApartmentRepository apartmentReposit
         apartment.Status = request.Status;
         apartment.EntranceId = request.EntranceId;
 
-        await _apartmentRepository.UpdateAsync(apartment);
+        await _apartmentRepository.UpdateAsync(apartment, cancellationToken);
 
         return _mapper.Map<SingleApartmentResponse>(apartment);
     }

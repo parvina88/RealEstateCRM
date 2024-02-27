@@ -9,6 +9,8 @@ namespace RealEstate.Application.Tests.Apartments.Commands
 {
     public class CreateApartmentCommandHandlerTests
     {
+        private readonly CancellationToken _token = CancellationToken.None;
+
         [Fact]
         public async Task Handle_ValidRequest_ReturnsSingleApartmentResponse()
         {
@@ -28,7 +30,7 @@ namespace RealEstate.Application.Tests.Apartments.Commands
             };
 
             var entranceRepositoryMock = new Mock<IEntranceRepository>();
-            entranceRepositoryMock.Setup(repo => repo.GetAsync(entranceId)).ReturnsAsync(new Entrance { Id = entranceId });
+            entranceRepositoryMock.Setup(repo => repo.GetAsync(entranceId, _token)).ReturnsAsync(new Entrance { Id = entranceId });
 
             var apartmentRepositoryMock = new Mock<IApartmentRepository>();
             var mapperMock = new Mock<IMapper>();
@@ -37,7 +39,7 @@ namespace RealEstate.Application.Tests.Apartments.Commands
             var handler = new CreateApartmentCommandHandler(apartmentRepositoryMock.Object, entranceRepositoryMock.Object, mapperMock.Object);
 
             // Act
-            var result = await handler.Handle(request, CancellationToken.None);
+            var result = await handler.Handle(request, _token);
 
             // Assert
             Assert.NotNull(result);
@@ -52,7 +54,7 @@ namespace RealEstate.Application.Tests.Apartments.Commands
             var request = new CreateApartmentRequest { EntranceId = entranceId };
 
             var entranceRepositoryMock = new Mock<IEntranceRepository>();
-            entranceRepositoryMock.Setup(repo => repo.GetAsync(entranceId)).ReturnsAsync((Entrance)null);
+            entranceRepositoryMock.Setup(repo => repo.GetAsync(entranceId, _token)).ReturnsAsync((Entrance)null);
 
             var apartmentRepositoryMock = new Mock<IApartmentRepository>();
             var mapperMock = new Mock<IMapper>();
@@ -60,7 +62,7 @@ namespace RealEstate.Application.Tests.Apartments.Commands
             var handler = new CreateApartmentCommandHandler(apartmentRepositoryMock.Object, entranceRepositoryMock.Object, mapperMock.Object);
 
             // Act & Assert
-            await Assert.ThrowsAsync<NotFoundException>(() => handler.Handle(request, CancellationToken.None));
+            await Assert.ThrowsAsync<NotFoundException>(() => handler.Handle(request,_token));
         }
     }
 }

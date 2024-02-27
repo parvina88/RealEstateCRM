@@ -12,7 +12,7 @@ public class GetApartmentListQueryHandler(IApartmentRepository apartmentReposito
 
     public async Task<ApartmentsResponse> Handle(GetApartmentsQuery request, CancellationToken cancellationToken)
     {
-        var apartments = await _apartmentRepository.GetAllAsync();
+        var apartments = await _apartmentRepository.GetAllAsync(cancellationToken);
 
         return  new ApartmentsResponse()
         {

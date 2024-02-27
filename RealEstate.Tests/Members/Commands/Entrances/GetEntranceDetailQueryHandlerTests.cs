@@ -7,6 +7,8 @@ namespace RealEstate.Application.Tests.Entrances;
 
 public class GetEntranceDetailQueryHandlerTests
 {
+    private readonly CancellationToken _token = CancellationToken.None;
+
     [Fact]
     public async Task Handle_ValidRequest_ReturnsSingleEntranceResponse()
     {
@@ -19,7 +21,7 @@ public class GetEntranceDetailQueryHandlerTests
         };
 
         var entranceRepositoryMock = new Mock<IEntranceRepository>();
-        entranceRepositoryMock.Setup(repo => repo.GetAsync(entranceId)).ReturnsAsync(entrance);
+        entranceRepositoryMock.Setup(repo => repo.GetAsync(entranceId, _token)).ReturnsAsync(entrance);
 
         var mapperMock = new Mock<IMapper>();
         var expectedResponse = new SingleEntranceResponse
@@ -33,7 +35,7 @@ public class GetEntranceDetailQueryHandlerTests
         var request = new GetSingleEntranceQuery(entranceId);
 
         // Act
-        var result = await handler.Handle(request, CancellationToken.None);
+        var result = await handler.Handle(request, _token);
 
         // Assert
         Assert.NotNull(result);

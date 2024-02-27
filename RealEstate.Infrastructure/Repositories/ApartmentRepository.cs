@@ -10,43 +10,43 @@ public class ApartmentRepository(IApplicationDbContext context) : IApartmentRepo
 {
     private readonly IApplicationDbContext _context = context;
 
-    public async Task<Apartment> CreateAsync(Apartment apartment)
+    public async Task<Apartment> CreateAsync(Apartment apartment, CancellationToken token = default)
     {
-        await _context.Apartments.AddAsync(apartment);
-        await _context.SaveChangesAsync();
+        await _context.Apartments.AddAsync(apartment, token);
+        await _context.SaveChangesAsync(token);
         
         return apartment;
     }
 
-    public async Task<IEnumerable<Apartment>> GetAllAsync()
+    public async Task<IEnumerable<Apartment>> GetAllAsync(CancellationToken token = default)
     {
-        return await _context.Apartments.ToListAsync();
+        return await _context.Apartments.ToListAsync(token);
     }
 
-    public async Task<IEnumerable<Apartment>> GetAllByEntranceAsync(Guid entranceId)
+    public async Task<IEnumerable<Apartment>> GetAllByEntranceAsync(Guid entranceId, CancellationToken token = default)
     {
-        return await _context.Apartments.Where(a => a.EntranceId == entranceId).ToListAsync();
+        return await _context.Apartments.Where(a => a.EntranceId == entranceId).ToListAsync(token);
     }
 
-    public async Task<IEnumerable<Apartment>> GetAllByStatusAsync(ApartmentStatus status)
+    public async Task<IEnumerable<Apartment>> GetAllByStatusAsync(ApartmentStatus status, CancellationToken token = default)
     {
-        return await _context.Apartments.Where(a => a.Status == status).ToListAsync();
+        return await _context.Apartments.Where(a => a.Status == status).ToListAsync(token);
     }
 
-    public async Task<Apartment> GetAsync(Guid id)
+    public async Task<Apartment> GetAsync(Guid id, CancellationToken token = default)
     {
-        return await _context.Apartments.FirstOrDefaultAsync(a => a.Id == id);
+        return await _context.Apartments.FirstOrDefaultAsync(a => a.Id == id, token);
     }
 
-    public async Task<bool> UpdateAsync(Apartment apartment)
+    public async Task<bool> UpdateAsync(Apartment apartment, CancellationToken token = default)
     {
         _context.Apartments.Update(apartment);
-        return await _context.SaveChangesAsync() > 0;
+        return await _context.SaveChangesAsync(token) > 0;
     }
 
-    public async Task<bool> DeleteAsync(Apartment apartment)
+    public async Task<bool> DeleteAsync(Apartment apartment, CancellationToken token = default)
     {
         _context.Apartments.Remove(apartment);
-        return await _context.SaveChangesAsync() > 0;
+        return await _context.SaveChangesAsync(token) > 0;
     }
 }

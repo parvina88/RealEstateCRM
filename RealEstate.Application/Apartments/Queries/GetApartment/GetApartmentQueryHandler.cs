@@ -14,7 +14,7 @@ public class GetApartmentQueryHandler(IApartmentRepository apartmentRepository, 
 
     public async Task<SingleApartmentResponse> Handle(GetSingleApartmentRequest request, CancellationToken cancellationToken)
     {
-        var apartment = await _apartmentRepository.GetAsync(request.ApartmentId) ?? throw new NotFoundException(nameof(Apartment), request.ApartmentId);
+        var apartment = await _apartmentRepository.GetAsync(request.ApartmentId, cancellationToken) ?? throw new NotFoundException(nameof(Apartment), request.ApartmentId);
 
         return _mapper.Map<SingleApartmentResponse>(apartment);
     }

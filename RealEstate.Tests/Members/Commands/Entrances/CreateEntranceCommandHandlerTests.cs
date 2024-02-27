@@ -8,6 +8,8 @@ namespace RealEstate.Application.Tests.Entrances;
 
 public class CreateEntranceCommandHandlerTests
 {
+    private readonly CancellationToken _token = CancellationToken.None;
+
     [Fact]
     public async Task Handle_ValidRequest_CreatesEntranceAndReturnsResponse()
     {
@@ -32,13 +34,13 @@ public class CreateEntranceCommandHandlerTests
             BuildingId = buildingId,
             Number = "Entrance 1",
             NumberOfFloors = 5,
-            NumberOfApartmentsOnFloor = 10,
+            NumberOfApartmentsPerFloor = 10,
             CeilingHeight = 2.5,
             HasLift = true
         };
 
-        buildingRepositoryMock.Setup(repo => repo.GetAsync(buildingId)).ReturnsAsync(building);
-        entranceRepositoryMock.Setup(repo => repo.CreateAsync(It.IsAny<Entrance>())).ReturnsAsync(true);
+        buildingRepositoryMock.Setup(repo => repo.GetAsync(buildingId, _token)).ReturnsAsync(building);
+        entranceRepositoryMock.Setup(repo => repo.CreateAsync(It.IsAny<Entrance>(), _token)).ReturnsAsync(true);
 
         var expectedResponse = new SingleEntranceResponse
         {
@@ -46,7 +48,7 @@ public class CreateEntranceCommandHandlerTests
             BuildingId = buildingId,
             Number = request.Number,
             NumberOfFloors = request.NumberOfFloors,
-            NumberOfApartmentsOnFloor = request.NumberOfApartmentsOnFloor,
+            NumberOfApartmentsPerFloor = request.NumberOfApartmentsPerFloor,
             CeilingHeight = request.CeilingHeight,
             HasLift = request.HasLift
         };
@@ -64,13 +66,13 @@ public class CreateEntranceCommandHandlerTests
         Assert.Equal(expectedResponse.BuildingId, result.BuildingId);
         Assert.Equal(expectedResponse.Number, result.Number);
         Assert.Equal(expectedResponse.NumberOfFloors, result.NumberOfFloors);
-        Assert.Equal(expectedResponse.NumberOfApartmentsOnFloor, result.NumberOfApartmentsOnFloor);
+        Assert.Equal(expectedResponse.NumberOfApartmentsPerFloor, result.NumberOfApartmentsPerFloor);
         Assert.Equal(expectedResponse.CeilingHeight, result.CeilingHeight);
         Assert.Equal(expectedResponse.HasLift, result.HasLift);
 
         // Verify repository interactions
-        buildingRepositoryMock.Verify(repo => repo.GetAsync(buildingId), Times.Once);
-        entranceRepositoryMock.Verify(repo => repo.CreateAsync(It.IsAny<Entrance>()), Times.Once);
+        buildingRepositoryMock.Verify(repo => repo.GetAsync(buildingId, _token), Times.Once);
+        entranceRepositoryMock.Verify(repo => repo.CreateAsync(It.IsAny<Entrance>(), _token), Times.Once);
     }
 
 }

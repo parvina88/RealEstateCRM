@@ -9,6 +9,7 @@ namespace RealEstate.Tests.Members.Commands.Apartments;
 
 public class GetApartmentQueryHandlerTests
 {
+    private readonly CancellationToken _token = CancellationToken.None;
     [Fact]
     public async Task Handle_ValidRequest_ReturnsSingleApartmentResponse()
     {
@@ -30,7 +31,7 @@ public class GetApartmentQueryHandlerTests
         };
 
         var apartmentRepositoryMock = new Mock<IApartmentRepository>();
-        apartmentRepositoryMock.Setup(repo => repo.GetAsync(apartmentId)).ReturnsAsync(apartment);
+        apartmentRepositoryMock.Setup(repo => repo.GetAsync(apartmentId, _token)).ReturnsAsync(apartment);
 
         var mapperMock = new Mock<IMapper>();
         var expectedResponse = new SingleApartmentResponse { Id = apartmentId }; // Create a response with expected values
@@ -39,7 +40,7 @@ public class GetApartmentQueryHandlerTests
         var handler = new GetApartmentQueryHandler(apartmentRepositoryMock.Object, mapperMock.Object);
 
         // Act
-        var result = await handler.Handle(request, CancellationToken.None);
+        var result = await handler.Handle(request, _token);
 
         // Assert
         Assert.NotNull(result);
@@ -55,13 +56,13 @@ public class GetApartmentQueryHandlerTests
         var request = new GetSingleApartmentRequest(apartmentId);
 
         var apartmentRepositoryMock = new Mock<IApartmentRepository>();
-        apartmentRepositoryMock.Setup(repo => repo.GetAsync(apartmentId)).ReturnsAsync((Apartment)null);
+        apartmentRepositoryMock.Setup(repo => repo.GetAsync(apartmentId, _token)).ReturnsAsync((Apartment)null);
 
         var mapperMock = new Mock<IMapper>();
         var handler = new GetApartmentQueryHandler(apartmentRepositoryMock.Object, mapperMock.Object);
 
         // Act and Assert
-        await Assert.ThrowsAsync<NotFoundException>(() => handler.Handle(request, CancellationToken.None));
+        await Assert.ThrowsAsync<NotFoundException>(() => handler.Handle(request, _token));
     }
 
 }

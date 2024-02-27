@@ -8,6 +8,8 @@ namespace RealEstate.Tests.Members.Commands.Buildings;
 
 public class DeleteBuildingCommandHandlerTests
 {
+    private readonly CancellationToken _token = CancellationToken.None;
+
     [Fact]
     public async Task Handle_ValidRequest_ReturnsTrue()
     {
@@ -22,13 +24,13 @@ public class DeleteBuildingCommandHandlerTests
             YearOfConstruction = 2024
         };
 
-        buildingRepositoryMock.Setup(x => x.GetAsync(request.Id)).ReturnsAsync(building);
-        buildingRepositoryMock.Setup(x => x.DeleteAsync(building)).ReturnsAsync(true);
+        buildingRepositoryMock.Setup(x => x.GetAsync(request.Id, _token)).ReturnsAsync(building);
+        buildingRepositoryMock.Setup(x => x.DeleteAsync(building, _token)).ReturnsAsync(true);
 
         var handler = new DeleteBuildingCommandHandler(buildingRepositoryMock.Object);
 
         //Act
-        var result = await handler.Handle(request, CancellationToken.None);
+        var result = await handler.Handle(request, _token);
 
         //Assert
         Assert.True(result);
@@ -41,11 +43,11 @@ public class DeleteBuildingCommandHandlerTests
         var buildingRepositoryMock = new Mock<IBuildingRepository>();
         var request = new DeleteBuildingRequest(Guid.NewGuid());
 
-        buildingRepositoryMock.Setup(x => x.GetAsync(request.Id)).ReturnsAsync((Building)null);
+        buildingRepositoryMock.Setup(x => x.GetAsync(request.Id, _token)).ReturnsAsync((Building)null);
 
         var handler = new DeleteBuildingCommandHandler(buildingRepositoryMock.Object);
 
         //Act && Assert
-        await Assert.ThrowsAsync<NotFoundException>(() => handler.Handle(request, CancellationToken.None));
+        await Assert.ThrowsAsync<NotFoundException>(() => handler.Handle(request, _token));
     }
 }

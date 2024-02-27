@@ -14,7 +14,7 @@ public class GetEntranceDetailQueryHandler(IEntranceRepository entranceRepositor
 
     public async Task<SingleEntranceResponse> Handle(GetSingleEntranceQuery request, CancellationToken cancellationToken)
     {
-        Entrance entrance = await _entranceRepository.GetAsync(request.Id) ?? throw new NotFoundException(nameof(Entrance), request.Id);
+        Entrance entrance = await _entranceRepository.GetAsync(request.Id, cancellationToken) ?? throw new NotFoundException(nameof(Entrance), request.Id);
         return _mapper.Map<SingleEntranceResponse>(entrance);
     }
 }

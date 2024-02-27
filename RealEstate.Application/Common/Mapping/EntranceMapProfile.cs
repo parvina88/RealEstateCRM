@@ -11,7 +11,5 @@ public class EntranceMapProfile : Profile
         CreateMap<Entrance, SingleEntranceResponse>();
         CreateMap<CreateEntranceRequest, Entrance>();
         CreateMap<GetEntrancesQuery, EntrancesResponse>();
-        CreateMap<UpdateEntranceRequest, Entrance>();
-        CreateMap<Entrance, UpdateEntranceRequest>();
     }
 }

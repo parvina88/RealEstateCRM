@@ -13,7 +13,7 @@ namespace RealEstate.Application.Buildings.Queries.GetBuildingList
 
         public async Task<BuildingsResponse> Handle(GetBuildingsQuery request, CancellationToken cancellationToken)
         {
-            IEnumerable<Building> buildings = await _buildingRepository.GetAllAsync();
+            IEnumerable<Building> buildings = await _buildingRepository.GetAllAsync(cancellationToken);
 
             return new BuildingsResponse()
             {

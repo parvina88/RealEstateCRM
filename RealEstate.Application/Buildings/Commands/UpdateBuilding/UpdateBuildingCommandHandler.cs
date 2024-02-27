@@ -14,7 +14,7 @@ public class UpdateBuildingCommandHandler(IBuildingRepository buildingRepository
 
     public async Task<SingleBuildingResponse> Handle(UpdateBuildingRequest request, CancellationToken cancellationToken)
     {
-        Building building = await _buildingRepository.GetAsync(request.Id) ?? throw new NotFoundException(nameof(Building), request.Id);
+        Building building = await _buildingRepository.GetAsync(request.Id, cancellationToken) ?? throw new NotFoundException(nameof(Building), request.Id);
         
         building.Name = request.Name;
         building.Address = request.Address;

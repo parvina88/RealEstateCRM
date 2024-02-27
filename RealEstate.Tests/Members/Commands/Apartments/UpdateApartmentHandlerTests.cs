@@ -8,6 +8,8 @@ namespace RealEstate.Tests.Members.Commands.Apartments;
 
 public class UpdateApartmentHandlerTests
 {
+    private readonly CancellationToken _token = CancellationToken.None;
+
     [Fact]
     public async Task Handle_ValidRequest_ReturnsTrue()
     {
@@ -31,8 +33,8 @@ public class UpdateApartmentHandlerTests
 
         var apartmentRepositoryMock = new Mock<IApartmentRepository>();
 
-        apartmentRepositoryMock.Setup(x => x.GetAsync(request.Id)).ReturnsAsync(apartment);
-        apartmentRepositoryMock.Setup(x => x.UpdateAsync(apartment)).ReturnsAsync(true);
+        apartmentRepositoryMock.Setup(x => x.GetAsync(request.Id, _token)).ReturnsAsync(apartment);
+        apartmentRepositoryMock.Setup(x => x.UpdateAsync(apartment, _token)).ReturnsAsync(true);
 
         var mapperMock = new Mock<IMapper>();
         var expectedResponse = new SingleApartmentResponse();
@@ -41,7 +43,7 @@ public class UpdateApartmentHandlerTests
 
 
         // Act
-        var result = await handler.Handle(request, CancellationToken.None);
+        var result = await handler.Handle(request, _token);
 
 
         // Assert
@@ -56,6 +58,6 @@ public class UpdateApartmentHandlerTests
         Assert.Equal(request.Status, apartment.Status);
         Assert.Equal(request.EntranceId, apartment.EntranceId);
 
-        apartmentRepositoryMock.Verify(repo => repo.UpdateAsync(apartment), Times.Once);
+        apartmentRepositoryMock.Verify(repo => repo.UpdateAsync(apartment, _token), Times.Once);
     }
 }

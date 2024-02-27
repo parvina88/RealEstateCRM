@@ -7,6 +7,8 @@ namespace RealEstate.Application.Tests.Entrances;
 
 public class UpdateEntranceCommandHandlerTests
 {
+    private readonly CancellationToken _token = CancellationToken.None;
+
     [Fact]
     public async Task Handle_ValidRequest_ReturnsSingleEntranceResponse()
     {
@@ -29,8 +31,8 @@ public class UpdateEntranceCommandHandlerTests
         };
 
         var entranceRepositoryMock = new Mock<IEntranceRepository>();
-        entranceRepositoryMock.Setup(repo => repo.GetAsync(entranceId)).ReturnsAsync(entrance);
-        entranceRepositoryMock.Setup(repo => repo.UpdateAsync(entrance)).ReturnsAsync(true);
+        entranceRepositoryMock.Setup(repo => repo.GetAsync(entranceId, _token)).ReturnsAsync(entrance);
+        entranceRepositoryMock.Setup(repo => repo.UpdateAsync(entrance, _token)).ReturnsAsync(true);
 
         var mapperMock = new Mock<IMapper>();
         var expectedResponse = new SingleEntranceResponse
@@ -46,7 +48,7 @@ public class UpdateEntranceCommandHandlerTests
         var handler = new UpdateEntranceCommandHandler(entranceRepositoryMock.Object, mapperMock.Object);
 
         // Act
-        var result = await handler.Handle(request, CancellationToken.None);
+        var result = await handler.Handle(request, _token);
 
         // Assert
         Assert.NotNull(result);
@@ -55,7 +57,7 @@ public class UpdateEntranceCommandHandlerTests
         Assert.Equal(expectedResponse.BuildingId, result.BuildingId);
         Assert.Equal(expectedResponse.NumberOfFloors, result.NumberOfFloors);
 
-        entranceRepositoryMock.Verify(repo => repo.GetAsync(entranceId), Times.Once);
-        entranceRepositoryMock.Verify(repo => repo.UpdateAsync(entrance), Times.Once);
+        entranceRepositoryMock.Verify(repo => repo.GetAsync(entranceId, _token), Times.Once);
+        entranceRepositoryMock.Verify(repo => repo.UpdateAsync(entrance, _token), Times.Once);
     }
 }

@@ -23,7 +23,7 @@ public class CreateBuildingCommandHandler(IBuildingRepository buildingRepository
             BuildingMaterial = request.BuildingMaterial
         };
 
-        await _buildingRepository.CreateAsync(building);
+        await _buildingRepository.CreateAsync(building, cancellationToken);
 
         return _mapper.Map<SingleBuildingResponse>(building);
     }

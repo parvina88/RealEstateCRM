@@ -8,6 +8,8 @@ namespace RealEstate.Tests.Members.Commands.Buildings;
 
 public class CreateBuildingCommandHandlerTests
 {
+    private readonly CancellationToken _token = CancellationToken.None;
+
     [Fact]
     public async Task Handle_ValidRequest_ReturnsSingleBuildingResponse()
     {
@@ -44,13 +46,13 @@ public class CreateBuildingCommandHandlerTests
             BuildingMaterial = building.BuildingMaterial
         };
 
-        buildingRepositoryMock.Setup(repo => repo.CreateAsync(It.IsAny<Building>())).ReturnsAsync(true);
+        buildingRepositoryMock.Setup(repo => repo.CreateAsync(It.IsAny<Building>(), _token)).ReturnsAsync(true);
         mapperMock.Setup(mapper => mapper.Map<SingleBuildingResponse>(It.IsAny<Building>())).Returns(expectedResponse);
 
         var handler = new CreateBuildingCommandHandler(buildingRepositoryMock.Object, mapperMock.Object);
 
         // Act
-        var response = await handler.Handle(request, CancellationToken.None);
+        var response = await handler.Handle(request, _token);
 
         // Assert
         Assert.NotNull(response);

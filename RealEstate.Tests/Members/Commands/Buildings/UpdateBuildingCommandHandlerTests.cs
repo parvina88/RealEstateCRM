@@ -8,6 +8,8 @@ namespace RealEstate.Tests.Members.Commands.Buildings
 {
     public class UpdateBuildingCommandHandlerTests
     {
+        private readonly CancellationToken _token = CancellationToken.None;
+
         [Fact]
         public async Task Handle_UpdateBuildingCommandHandler_ShouldUpdateBuildingAndReturnSingleBuildingResponse()
         {
@@ -35,8 +37,8 @@ namespace RealEstate.Tests.Members.Commands.Buildings
             var mapperMock = new Mock<IMapper>();
             var handler = new UpdateBuildingCommandHandler(buildingRepositoryMock.Object, mapperMock.Object);
 
-            buildingRepositoryMock.Setup(repo => repo.GetAsync(buildingId)).ReturnsAsync(updatedBuilding);
-            buildingRepositoryMock.Setup(repo => repo.UpdateAsync(updatedBuilding)).ReturnsAsync(true);
+            buildingRepositoryMock.Setup(repo => repo.GetAsync(buildingId, _token)).ReturnsAsync(updatedBuilding);
+            buildingRepositoryMock.Setup(repo => repo.UpdateAsync(updatedBuilding, _token)).ReturnsAsync(true);
 
             mapperMock.Setup(mapper => mapper.Map<SingleBuildingResponse>(updatedBuilding))
                 .Returns(new SingleBuildingResponse
@@ -50,7 +52,7 @@ namespace RealEstate.Tests.Members.Commands.Buildings
                 });
 
             // Act
-            var result = await handler.Handle(request, CancellationToken.None);
+            var result = await handler.Handle(request, _token);
 
             // Assert
             Assert.NotNull(result);

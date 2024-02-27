@@ -13,7 +13,7 @@ public class GetEntrancesQueryHandler(IEntranceRepository entranceRepository, IM
 
     public async Task<EntrancesResponse> Handle(GetEntrancesQuery request, CancellationToken cancellationToken)
     {
-        IEnumerable<Entrance> entrances = await _entranceRepository.GetAllAsync();
+        IEnumerable<Entrance> entrances = await _entranceRepository.GetAllAsync(cancellationToken);
 
         return  new EntrancesResponse()
         {

@@ -8,6 +8,8 @@ namespace RealEstate.Application.Tests.Entrances;
 
 public class DeleteEntranceCommandHandlerTests
 {
+    private readonly CancellationToken _token = CancellationToken.None;
+
     [Fact]
     public async Task Handle_ValidRequest_DeletesEntrance()
     {
@@ -21,8 +23,8 @@ public class DeleteEntranceCommandHandlerTests
         };
 
         var entranceRepositoryMock = new Mock<IEntranceRepository>();
-        entranceRepositoryMock.Setup(repo => repo.GetAsync(entranceId)).ReturnsAsync(entrance);
-        entranceRepositoryMock.Setup(repo => repo.DeleteAsync(entrance)).ReturnsAsync(true);
+        entranceRepositoryMock.Setup(repo => repo.GetAsync(entranceId, _token)).ReturnsAsync(entrance);
+        entranceRepositoryMock.Setup(repo => repo.DeleteAsync(entrance, _token)).ReturnsAsync(true);
 
         var handler = new DeleteEntranceCommandHandler(entranceRepositoryMock.Object);
 
@@ -33,8 +35,8 @@ public class DeleteEntranceCommandHandlerTests
         Assert.True(result);
 
         // Verify that the repository methods were called with the correct arguments
-        entranceRepositoryMock.Verify(repo => repo.GetAsync(entranceId), Times.Once);
-        entranceRepositoryMock.Verify(repo => repo.DeleteAsync(entrance), Times.Once);
+        entranceRepositoryMock.Verify(repo => repo.GetAsync(entranceId, _token), Times.Once);
+        entranceRepositoryMock.Verify(repo => repo.DeleteAsync(entrance, _token), Times.Once);
     }
 
     [Fact]
@@ -45,7 +47,7 @@ public class DeleteEntranceCommandHandlerTests
         var request = new DeleteEntranceRequest(entranceId);
 
         var entranceRepositoryMock = new Mock<IEntranceRepository>();
-        entranceRepositoryMock.Setup(repo => repo.GetAsync(entranceId)).ReturnsAsync((Entrance)null);
+        entranceRepositoryMock.Setup(repo => repo.GetAsync(entranceId, _token)).ReturnsAsync((Entrance)null);
 
         var handler = new DeleteEntranceCommandHandler(entranceRepositoryMock.Object);
 
@@ -53,7 +55,7 @@ public class DeleteEntranceCommandHandlerTests
         await Assert.ThrowsAsync<NotFoundException>(() => handler.Handle(request, CancellationToken.None));
 
         // Verify that the repository method was called with the correct argument
-        entranceRepositoryMock.Verify(repo => repo.GetAsync(entranceId), Times.Once);
-        entranceRepositoryMock.Verify(repo => repo.DeleteAsync(It.IsAny<Entrance>()), Times.Never);
+        entranceRepositoryMock.Verify(repo => repo.GetAsync(entranceId, _token), Times.Once);
+        entranceRepositoryMock.Verify(repo => repo.DeleteAsync(It.IsAny<Entrance>(), _token), Times.Never);
     }
 }

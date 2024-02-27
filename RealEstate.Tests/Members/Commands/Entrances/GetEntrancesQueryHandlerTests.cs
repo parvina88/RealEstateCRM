@@ -7,21 +7,23 @@ namespace RealEstate.Tests.Members.Commands.Entrances;
 
 public class GetEntrancesQueryHandlerTests
 {
+    private readonly CancellationToken _token = CancellationToken.None;
+
     [Fact]
     public async Task Handle_ValidRequest_ReturnsEntrancesResponse()
     {
         // Arrange
         var entrances = new List<Entrance>
             {
-                new Entrance { Id = Guid.NewGuid(), Number = "Entrance 1" },
-                new Entrance { Id = Guid.NewGuid(), Number = "Entrance 2" }
+                new() { Id = Guid.NewGuid(), Number = "Entrance 1" },
+                new() { Id = Guid.NewGuid(), Number = "Entrance 2" }
             };
 
         var entranceRepositoryMock = new Mock<IEntranceRepository>();
-        entranceRepositoryMock.Setup(repo => repo.GetAllAsync()).ReturnsAsync(entrances);
+        entranceRepositoryMock.Setup(repo => repo.GetAllAsync(_token)).ReturnsAsync(entrances);
 
         var mapperMock = new Mock<IMapper>();
-        EntrancesResponse expectedResponse = new EntrancesResponse { Items = new List<SingleEntranceResponse>() };
+        EntrancesResponse expectedResponse = new() { Items = new List<SingleEntranceResponse>() };
         foreach (var entrance in entrances)
         {
             expectedResponse.Items.ToList().Add(new SingleEntranceResponse { Id = entrance.Id, Number = entrance.Number });
@@ -32,7 +34,7 @@ public class GetEntrancesQueryHandlerTests
         var request = new GetEntrancesQuery();
 
         // Act
-        var result = await handler.Handle(request, CancellationToken.None);
+        var result = await handler.Handle(request, _token);
 
         // Assert
         Assert.NotNull(result);
