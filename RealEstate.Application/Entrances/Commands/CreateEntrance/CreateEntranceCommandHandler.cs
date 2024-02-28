@@ -1,11 +1,8 @@
 ﻿using AutoMapper;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
-using RealEstate.Application.Common.Exceptions;
-using RealEstate.Application.Data;
-using RealEstate.Contract.Building;
 using RealEstate.Contract.Entrance;
 using RealEstate.Domain.Entities;
+using RealEstate.Domain.Exceptions;
 using RealEstate.Domain.Interfaces;
 
 namespace RealEstate.Application.Entrances.Commands.CreateEntrance;
@@ -13,23 +10,19 @@ namespace RealEstate.Application.Entrances.Commands.CreateEntrance;
 public class CreateEntranceCommandHandler : IRequestHandler<CreateEntranceRequest, SingleEntranceResponse>
 {
     private readonly IEntranceRepository _entranceRepository;
-    private readonly IApplicationDbContext _context;
+    private readonly IBuildingRepository _buildingRepository;
     private readonly IMapper _mapper;
 
-    public CreateEntranceCommandHandler(IEntranceRepository entranceRepository, IMapper mapper, IApplicationDbContext context)
+    public CreateEntranceCommandHandler(IEntranceRepository entranceRepository, IBuildingRepository buildingRepository, IMapper mapper)
     {
         _entranceRepository = entranceRepository;
+        _buildingRepository = buildingRepository;
         _mapper = mapper;
-        _context = context;
     }
-
 
     public async Task<SingleEntranceResponse> Handle(CreateEntranceRequest request, CancellationToken cancellationToken)
     {
-        var building = await _context.Buildings.FirstOrDefaultAsync(c => c.Name == request.Building);
-
-        if (building == null)
-            throw new ValidationFailedException("Building", request.Building);
+        var building = await _buildingRepository.GetAsync(request.BuildingId, cancellationToken) ?? throw new NotFoundException(nameof(Building), request.BuildingId);
 
         var entrance = new Entrance()
         {
@@ -42,7 +35,7 @@ public class CreateEntranceCommandHandler : IRequestHandler<CreateEntranceReques
             BuildingId = building.Id
         };
 
-        await _entranceRepository.CreateAsync(entrance);
+        await _entranceRepository.CreateAsync(entrance, cancellationToken);
 
         return _mapper.Map<SingleEntranceResponse>(entrance);
     }

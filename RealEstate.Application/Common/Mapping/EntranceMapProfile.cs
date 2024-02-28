@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using RealEstate.Contract.Building;
 using RealEstate.Contract.Entrance;
 using RealEstate.Domain.Entities;
 
@@ -9,10 +8,8 @@ public class EntranceMapProfile : Profile
 {
     public EntranceMapProfile()
     {
+        CreateMap<Entrance, SingleEntranceResponse>();
         CreateMap<CreateEntranceRequest, Entrance>();
         CreateMap<GetEntrancesQuery, EntrancesResponse>();
-
-        CreateMap<Entrance, SingleEntranceResponse>()
-            .ForMember(getEntrance => getEntrance.Building, opt => opt.MapFrom(building => building.Building.Name));
     }
 }

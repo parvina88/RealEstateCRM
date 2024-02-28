@@ -15,6 +15,7 @@ public static class DependencyInjection
         services.AddScoped<IApplicationDbInitializer, ApplicationDbInitializer>();
         services.AddScoped<IBuildingRepository, BuildingRepository>();
         services.AddScoped<IEntranceRepository, EntranceRepository>();
+        services.AddScoped<IApartmentRepository, ApartmentRepository>();
 
         services.AddDbContext<IApplicationDbContext, ApplicationDbContext>(options =>
         {

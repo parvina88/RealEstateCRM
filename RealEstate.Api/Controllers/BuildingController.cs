@@ -9,7 +9,7 @@ namespace RealEstate.Api.Controllers
         [HttpPost(ApiEndpoints.Building.Create)]
         public async Task<IActionResult> Create([FromBody] CreateBuildingRequest request, CancellationToken token)
         {
-            var response = await Sender.Send(request);
+            var response = await Sender.Send(request, token);
             return CreatedAtAction(nameof(Get), new { id = response.Id }, response);
         }
 
@@ -23,38 +23,39 @@ namespace RealEstate.Api.Controllers
 
             var response = await Sender.Send(query, token);
 
-            if (response == null)
-                return NotFound();
-
-            return Ok(response);
+            return response == null ? NotFound() : Ok(response);
         }
 
         [HttpGet(ApiEndpoints.Building.GetAll)]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll(CancellationToken token)
         {
             var request = new GetBuildingsQuery();
-            var response =  await Sender.Send(request);
+            var response =  await Sender.Send(request, token);
 
             return Ok(response);
         }
 
         [HttpPut(ApiEndpoints.Building.Update)]
-        public async Task<SingleBuildingResponse> Update([FromRoute] Guid id, [FromBody] UpdateBuildingRequest request, CancellationToken token = default)
+        public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateBuildingRequest request, CancellationToken token)
         {
+            if (request == null)
+            {
+                return BadRequest("Invalid request data.");
+            }
+
             request.Id = id;
-            return await Sender.Send(request);
+            var response = await Sender.Send(request, token);
+
+            return response == null ? NotFound() : Ok(response);
         }
 
         [HttpDelete(ApiEndpoints.Building.Delete)]
-        public async Task<IActionResult> Delete([FromRoute] Guid id)
+        public async Task<IActionResult> Delete([FromRoute] Guid id, CancellationToken token)
         {
             var request = new DeleteBuildingRequest(id);
-            var response = await Sender.Send(request);
+            var response = await Sender.Send(request, token);
 
-            if(!response)
-                return NotFound();
-
-            return Ok(response);
+            return response ? Ok() : NotFound($"Building with ID {id} not found.");
         }
     }
 }

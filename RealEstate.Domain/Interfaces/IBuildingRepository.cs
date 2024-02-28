@@ -5,8 +5,8 @@ namespace RealEstate.Domain.Interfaces;
 public interface IBuildingRepository
 {
     Task<bool> CreateAsync(Building building, CancellationToken token = default);
-    Task<Building?> GetAsync(Guid id);
-    Task<IEnumerable<Building>> GetAllAsync();
-    Task<bool> UpdateAsync(Building building);
-    Task<bool> DeleteAsync(Guid id);
+    Task<Building?> GetAsync(Guid id, CancellationToken token = default);
+    Task<IEnumerable<Building>> GetAllAsync(CancellationToken token = default);
+    Task<bool> UpdateAsync(Building building, CancellationToken token = default);
+    Task<bool> DeleteAsync(Building building, CancellationToken token = default);
 }
