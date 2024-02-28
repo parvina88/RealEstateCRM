@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.Identity;
 using RealEstate.Application;
 using RealEstate.Infrastructure;
+using RealEstate.Infrastructure.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 var config = builder.Configuration;
@@ -14,6 +16,11 @@ builder.Services
     .AddInfrastructure(config)
     .AddApplication();
 
+builder.Services.AddAuthorization();
+
+builder.Services.AddIdentityApiEndpoints<IdentityUser>()
+    .AddEntityFrameworkStores<ApplicationDbContext>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -25,5 +32,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.MapControllers();
+app.MapGroup("/identity").MapIdentityApi<IdentityUser>();
 
 app.Run();
