@@ -5,9 +5,11 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <InvariantGlobalization>false</InvariantGlobalization>
+		<UserSecretsId>RealEjsonWebToken</UserSecretsId>
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.2" />
         <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.1" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.1" />
         <PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.5" />
@@ -21,6 +23,7 @@
     <ItemGroup>
       <ProjectReference Include="..\RealEstate.Application\RealEstate.Application.csproj" />
       <ProjectReference Include="..\RealEstate.Infrastructure\RealEstate.Infrastructure.csproj" />
+      <ProjectReference Include="..\RealEstateCRM.ServiceDefaults\RealEstateCRM.ServiceDefaults.csproj" />
     </ItemGroup>
 
     <ItemGroup>

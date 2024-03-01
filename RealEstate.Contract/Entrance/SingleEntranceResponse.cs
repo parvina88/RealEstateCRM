@@ -9,4 +9,4 @@ public record SingleEntranceResponse
     public double CeilingHeight { get; set; }
     public bool HasLift { get; set; }
     public Guid BuildingId { get; set; }
-    }
+}

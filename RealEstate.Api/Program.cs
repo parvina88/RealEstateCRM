@@ -4,6 +4,8 @@ using RealEstate.Infrastructure;
 using RealEstate.Infrastructure.Data;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.AddServiceDefaults();
 var config = builder.Configuration;
 
 // Add services to the container.
@@ -19,9 +21,25 @@ builder.Services
 builder.Services.AddAuthorization();
 
 builder.Services.AddIdentityApiEndpoints<IdentityUser>()
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddApiEndpoints();
 
+builder.Services.AddScoped(sp =>
+    new HttpClient
+    {
+        BaseAddress = new Uri(
+            builder.Configuration.GetSection("ApiServer")["BaseUri"] ??
+                "http://0.0.0.0")
+    });
+
+builder.Services.AddAuthentication(IdentityConstants.ApplicationScheme)
+    .AddBearerToken();
+
+builder.Services.AddAuthorizationBuilder();
+    
 var app = builder.Build();
+
+app.MapDefaultEndpoints();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -33,5 +51,6 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.MapControllers();
 app.MapGroup("/identity").MapIdentityApi<IdentityUser>();
-
+app.UseAuthentication();
+app.UseAuthorization();
 app.Run();

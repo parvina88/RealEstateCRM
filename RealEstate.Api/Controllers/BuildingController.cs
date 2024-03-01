@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using RealEstate.Contract.Building;
 
 namespace RealEstate.Api.Controllers
@@ -13,6 +14,7 @@ namespace RealEstate.Api.Controllers
             return CreatedAtAction(nameof(Get), new { id = response.Id }, response);
         }
 
+        [Authorize]
         [HttpGet(ApiEndpoints.Building.Get)]
         public async Task<IActionResult> Get([FromRoute] Guid id, CancellationToken token)
         {
@@ -26,6 +28,7 @@ namespace RealEstate.Api.Controllers
             return response == null ? NotFound() : Ok(response);
         }
 
+        [Authorize]
         [HttpGet(ApiEndpoints.Building.GetAll)]
         public async Task<IActionResult> GetAll(CancellationToken token)
         {

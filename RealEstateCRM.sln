@@ -15,6 +15,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RealEstate.Infrastructure",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RealEstate.Tests", "RealEstate.Tests\RealEstate.Tests.csproj", "{5E13A9CF-1C33-4236-839F-D3F31684C192}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RealEstate.Client", "RealEstate.Client\RealEstate.Client.csproj", "{3DA74304-6520-4513-B3FE-4F9C7347A65A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RealEstateCRM.AppHost", "RealEstateCRM.AppHost\RealEstateCRM.AppHost.csproj", "{03C6F799-4709-4753-9E52-095F64BC738D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RealEstateCRM.ServiceDefaults", "RealEstateCRM.ServiceDefaults\RealEstateCRM.ServiceDefaults.csproj", "{06525DCB-6E33-4EFA-A0DB-F86B563C8A86}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +51,18 @@ Global
 		{5E13A9CF-1C33-4236-839F-D3F31684C192}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5E13A9CF-1C33-4236-839F-D3F31684C192}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5E13A9CF-1C33-4236-839F-D3F31684C192}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3DA74304-6520-4513-B3FE-4F9C7347A65A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3DA74304-6520-4513-B3FE-4F9C7347A65A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3DA74304-6520-4513-B3FE-4F9C7347A65A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3DA74304-6520-4513-B3FE-4F9C7347A65A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03C6F799-4709-4753-9E52-095F64BC738D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03C6F799-4709-4753-9E52-095F64BC738D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03C6F799-4709-4753-9E52-095F64BC738D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03C6F799-4709-4753-9E52-095F64BC738D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06525DCB-6E33-4EFA-A0DB-F86B563C8A86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06525DCB-6E33-4EFA-A0DB-F86B563C8A86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06525DCB-6E33-4EFA-A0DB-F86B563C8A86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06525DCB-6E33-4EFA-A0DB-F86B563C8A86}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
