@@ -1,45 +1,65 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.OpenApi.Models;
 using RealEstate.Application;
 using RealEstate.Infrastructure;
 using RealEstate.Infrastructure.Data;
+using Swashbuckle.AspNetCore.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.AddServiceDefaults();
 var config = builder.Configuration;
-
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.AddControllers();
-
 builder.Services
     .AddInfrastructure(config)
     .AddApplication();
 
-builder.Services.AddAuthorization();
+//builder.Services.AddIdentityCore<IdentityUser>()
+//    .AddEntityFrameworkStores<ApplicationDbContext>()
+//    .AddApiEndpoints();
 
-builder.Services.AddIdentityApiEndpoints<IdentityUser>()
-    .AddEntityFrameworkStores<ApplicationDbContext>()
-    .AddApiEndpoints();
+//builder.Services.AddIdentityApiEndpoints<IdentityUser>()
+//    .AddEntityFrameworkStores<ApplicationDbContext>();
 
-builder.Services.AddScoped(sp =>
-    new HttpClient
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<ApplicationDbContext>();
+
+builder.Services.AddAuthentication()
+    .AddBearerToken(IdentityConstants.BearerScheme);
+
+builder.Services.AddAuthorizationBuilder()
+    .AddPolicy("api", p =>
     {
-        BaseAddress = new Uri(
-            builder.Configuration.GetSection("ApiServer")["BaseUri"] ??
-                "http://0.0.0.0")
+        p.RequireAuthenticatedUser();
+        p.AddAuthenticationSchemes(IdentityConstants.BearerScheme);
     });
 
-builder.Services.AddAuthentication(IdentityConstants.ApplicationScheme)
-    .AddBearerToken();
+// Add services to the container.
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+//builder.Services.AddEndpointsApiExplorer();
 
-builder.Services.AddAuthorizationBuilder();
-    
+builder.Services.AddSwaggerGen(options =>
+{
+    options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+    {
+        In = ParameterLocation.Header,
+        Description = "Please insert JWT with Bearer into field",
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey
+    });
+
+    options.OperationFilter<SecurityRequirementsOperationFilter>();
+});
+
+builder.Services.AddControllers();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("corsapp", builder =>
+    {
+        builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
+    });
+});
+
 var app = builder.Build();
-
-app.MapDefaultEndpoints();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -49,8 +69,14 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.MapControllers();
-app.MapGroup("/identity").MapIdentityApi<IdentityUser>();
-app.UseAuthentication();
+app.UseRouting();
+app.UseHttpsRedirection();
+app.UseCors("corsapp");
+
 app.UseAuthorization();
+
+app.MapGroup("/account").MapIdentityApi<IdentityUser>();
+app.MapControllers();
+
 app.Run();
+

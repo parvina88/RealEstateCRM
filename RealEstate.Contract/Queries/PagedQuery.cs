@@ -1,6 +1,4 @@
-﻿using MediatR;
-
-namespace RealEstate.Contract.Queries;
+﻿namespace RealEstate.Contract.Queries;
 
 public abstract record PagedQuery<T> : IRequest<List<T>> 
 {

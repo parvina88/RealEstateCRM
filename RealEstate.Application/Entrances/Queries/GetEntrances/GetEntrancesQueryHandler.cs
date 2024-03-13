@@ -1,8 +1,4 @@
-﻿using AutoMapper;
-using MediatR;
-using RealEstate.Contract.Entrance;
-using RealEstate.Domain.Entities;
-using RealEstate.Domain.Interfaces;
+﻿using RealEstate.Contract.Entrance;
 
 namespace RealEstate.Application.Entrances.Queries.GetEntrances;
 

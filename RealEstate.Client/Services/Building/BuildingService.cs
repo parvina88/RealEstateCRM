@@ -24,9 +24,9 @@ public class BuildingService : IBuildingService
         return await _httpClient.DeleteAsync($"{_configuration["ApiUrl"]}/api/building/{request.Id}");
     }
 
-    public async Task<ApiResponse<List<SingleBuildingResponse>>> GetAllAsync(GetBuildingsQuery request)
+    public async Task<ApiResponse<BuildingsResponse>> GetAllAsync(GetBuildingsQuery request)
     {
-        return await _httpClient.GetJsonAsync<List<SingleBuildingResponse>>($"{_configuration["ApiUrl"]}/Building/api/buildings", request);
+        return await _httpClient.GetJsonAsync<BuildingsResponse>($"{_configuration["ApiUrl"]}/Building/api/buildings", request);
     }
 
     public async Task<ApiResponse<SingleBuildingResponse>> UpdateAsync(UpdateBuildingRequest request)

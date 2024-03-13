@@ -1,12 +1,10 @@
-﻿using FluentValidation;
-using MediatR;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using RealEstate.Application.Behaviors;
 using System.Reflection;
 
 namespace RealEstate.Application;
 
-public static class DependecyInjection
+public static class DependencyInjection
 {
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {

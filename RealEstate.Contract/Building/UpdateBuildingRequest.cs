@@ -1,6 +1,4 @@
-﻿using MediatR;
-using RealEstate.Domain.Enums;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace RealEstate.Contract.Building;
 

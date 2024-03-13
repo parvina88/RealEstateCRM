@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using RealEstate.Contract.Apartment;
 using RealEstate.Domain.Enums;
 
 namespace RealEstate.Api.Controllers;
 
 [ApiController]
+[Authorize]
 public class ApartmentController : ApiControllerBase
 {
     [HttpPost(ApiEndpoints.Apartment.Create)]

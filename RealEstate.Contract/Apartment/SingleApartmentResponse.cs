@@ -1,6 +1,4 @@
-﻿using RealEstate.Domain.Enums;
-
-namespace RealEstate.Contract.Apartment;
+﻿namespace RealEstate.Contract.Apartment;
 
 public record SingleApartmentResponse
 {

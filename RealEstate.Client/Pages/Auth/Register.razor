@@ -1,0 +1,65 @@
+﻿@page "/auth/register"
+@using RealEstate.Client.Services.Auth
+@using RealEstate.Contract.Auth
+@inject IAuthService authService
+@inject NavigationManager NavManager;
+
+<h3>Register</h3>
+<AuthorizeView>
+    <NotAuthorized>
+        <EditForm Model="@SingUpRequest" OnValidSubmit="HandleValidSubmit" Context="_signUp">
+            <DataAnnotationsValidator />
+            <div class="form-group">
+                <label>Username</label>
+                <InputText @bind-Value="SingUpRequest.Email" class="form-control" />
+                <ValidationMessage For="@(() => SingUpRequest.Email)" />
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <InputText @bind-Value="SingUpRequest.Password" type="password" class="form-control" />
+                <ValidationMessage For="@(() => SingUpRequest.Password)" />
+            </div>
+            @if (isSigningUp)
+            {
+                <br />
+                <Progress Color="TablerColor.Blue" Indeterminate />
+            }
+            <br />
+            <button class="btn btn-primary">
+                Sign up
+            </button>
+        </EditForm>
+    </NotAuthorized>
+    <Authorized>
+        <p>You already signed up. Back to <a href="/">Home</a></p>
+    </Authorized>
+</AuthorizeView>
+
+<br />
+@if (SignUpIsNotValid)
+{
+    <Alert BackgroundColor="TablerColor.Danger" Title="Signing up" Dismissible>
+     <div class="text-muted">@message</div>
+ </Alert>
+}
+@code {
+
+    private AccountSignUpRequest SingUpRequest { get; } = new();
+    private bool SignUpIsNotValid = false;
+    private string message;
+    private bool isSigningUp;
+
+    private async Task HandleValidSubmit()
+    {
+        SignUpIsNotValid = false;
+        isSigningUp = true;
+        var response = await authService.RegisterAsync(SingUpRequest);
+        isSigningUp = false;
+        SignUpIsNotValid = !response.Success;
+        message = response.Error;
+        if (response.Success)
+        {
+            NavManager.NavigateTo("/");
+        }
+    }
+}

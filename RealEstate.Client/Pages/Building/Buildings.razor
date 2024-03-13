@@ -1,5 +1,6 @@
 ﻿@page "/buildings"
 @using System.Text.Json
+@using Microsoft.AspNetCore.Authorization
 @using RealEstate.Client.Services.Building
 @using RealEstate.Contract.Building
 @using RealEstate.Client.Services
@@ -42,7 +43,7 @@
 
         if (response.Success)
         {
-            buildings = response.Result;
+            buildings = response.Result.Items.ToList();
         }
         else
         {
@@ -54,7 +55,7 @@
     protected override async Task OnInitializedAsync()
     {
         isLoading = true;
-        await LoadBuildings();
+        await Task.WhenAll(LoadBuildings());
         isLoading = false;
     }
 }

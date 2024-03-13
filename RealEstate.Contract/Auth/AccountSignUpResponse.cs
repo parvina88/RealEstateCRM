@@ -1,4 +1,4 @@
-﻿namespace RealEstate.Client.Services.Auth;
+﻿namespace RealEstate.Contract.Auth;
 
 public record AccountSignUpResponse
 {

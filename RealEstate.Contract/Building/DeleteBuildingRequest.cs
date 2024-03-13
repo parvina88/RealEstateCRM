@@ -1,5 +1,3 @@
-﻿using MediatR;
-
-namespace RealEstate.Contract.Building;
+﻿namespace RealEstate.Contract.Building;
 
 public record DeleteBuildingRequest(Guid Id) : IRequest<bool>;

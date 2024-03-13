@@ -1,5 +1,4 @@
-﻿using FluentValidation;
-using RealEstate.Contract.Entrance;
+﻿using RealEstate.Contract.Entrance;
 
 namespace RealEstate.Application.Entrances.Commands.UpdateEntrance;
 

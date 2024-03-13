@@ -1,7 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using RealEstate.Domain.Entities;
-
-namespace RealEstate.Application.Data;
+﻿namespace RealEstate.Application.Data;
 
 public interface IApplicationDbContext
 {

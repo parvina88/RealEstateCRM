@@ -1,8 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using RealEstate.Application.Data;
-using RealEstate.Domain.Interfaces;
 using RealEstate.Infrastructure.Data;
 using RealEstate.Infrastructure.Repositories;
 
@@ -26,6 +23,7 @@ public static class DependencyInjection
             else
                 options.UseSqlServer(connectionString);
         });
+
 
         return services;
     }

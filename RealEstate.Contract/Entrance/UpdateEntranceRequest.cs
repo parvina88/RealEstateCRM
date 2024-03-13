@@ -1,5 +1,4 @@
-﻿using MediatR;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace RealEstate.Contract.Entrance;
 

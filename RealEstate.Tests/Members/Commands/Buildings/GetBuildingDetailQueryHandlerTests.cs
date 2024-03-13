@@ -15,7 +15,7 @@ public class GetBuildingDetailQueryHandlerTests
     {
         // Arrange
         var buildingId = Guid.NewGuid();
-        var request = new GetSingleBuildingQuery { BuildingId = buildingId };
+        var request = new GetSingleBuildingQuery(buildingId);
         var building = new Building { Id = buildingId, Name = "Test Building" };
 
         var buildingRepositoryMock = new Mock<IBuildingRepository>();
@@ -41,7 +41,7 @@ public class GetBuildingDetailQueryHandlerTests
     {
         // Arrange
         var buildingId = Guid.NewGuid();
-        var request = new GetSingleBuildingQuery { BuildingId = buildingId };
+        var request = new GetSingleBuildingQuery(buildingId);
 
         var buildingRepositoryMock = new Mock<IBuildingRepository>();
         buildingRepositoryMock.Setup(repo => repo.GetAsync(buildingId, _token)).ReturnsAsync((Building)null);

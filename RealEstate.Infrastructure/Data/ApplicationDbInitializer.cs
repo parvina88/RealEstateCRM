@@ -1,7 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using RealEstate.Application.Data;
-
-namespace RealEstate.Infrastructure.Data;
+﻿namespace RealEstate.Infrastructure.Data;
 
 public class ApplicationDbInitializer : IApplicationDbInitializer
 {

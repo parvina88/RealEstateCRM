@@ -1,7 +1,4 @@
-﻿using MediatR;
-using RealEstate.Domain.Enums;
-
-namespace RealEstate.Contract.Apartment;
+﻿namespace RealEstate.Contract.Apartment;
 
 public class CreateApartmentRequest : IRequest<SingleApartmentResponse>
 {

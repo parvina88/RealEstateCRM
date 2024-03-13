@@ -1,9 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using RealEstate.Application.Data;
-using RealEstate.Domain.Entities;
-using RealEstate.Domain.Interfaces;
-
-namespace RealEstate.Infrastructure.Repositories;
+﻿namespace RealEstate.Infrastructure.Repositories;
 
 public class BuildingRepository(IApplicationDbContext context) : IBuildingRepository
 {

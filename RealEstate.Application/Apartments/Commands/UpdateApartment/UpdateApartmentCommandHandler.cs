@@ -1,9 +1,4 @@
-﻿using AutoMapper;
-using MediatR;
-using RealEstate.Contract.Apartment;
-using RealEstate.Domain.Entities;
-using RealEstate.Domain.Exceptions;
-using RealEstate.Domain.Interfaces;
+﻿using RealEstate.Contract.Apartment;
 
 namespace RealEstate.Application.Apartments.Commands.UpdateApartment;
 

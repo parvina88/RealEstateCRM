@@ -1,6 +1,8 @@
 ﻿using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
 using RealEstate.Client.Services.HttpClients;
+using RealEstate.Contract.Auth;
+using System.Text.Json;
 
 namespace RealEstate.Client.Services.Auth
 {
@@ -20,11 +22,18 @@ namespace RealEstate.Client.Services.Auth
             _configuration = configuration;
         }
 
+        public Task<bool> CheckAuthenticatedAsync()
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<ApiResponse<AccountSignInResponse>> LoginAsync(AccountSignInRequest accountSignInRequest)
         {
             try
             {
-                var response = await _httpClient.PostJsonAsync<AccountSignInResponse>($"{_configuration["AccountServiceUrl"]}/Auth/sign-in", accountSignInRequest);
+                var loginAsJson = JsonSerializer.Serialize(accountSignInRequest);
+                var response = await _httpClient.PostJsonAsync<AccountSignInResponse>($"{_configuration["ApiUrl"]}/identity/login", loginAsJson);
+
                 if (response.Success)
                 {
                     await _localStorageService.SetItemAsync(IAuthService.TokenLocalStorageKey, response.Result.Token);
@@ -49,11 +58,11 @@ namespace RealEstate.Client.Services.Auth
             await _authenticationStateProvider.GetAuthenticationStateAsync();
         }
 
-        public async Task<ApiResponse<AccountSignUpResponse>> SignUpAsync(AccountSignUpRequest accountSignUpRequest)
+        public async Task<ApiResponse<AccountSignUpResponse>> RegisterAsync(AccountSignUpRequest accountSignUpRequest)
         {
             try
             {
-                var tokenResponse = await _httpClient.PostJsonAsync<AccountSignUpResponse>($"{_configuration["AccountServiceUrl"]}/Auth/sign-up", accountSignUpRequest);
+                var tokenResponse = await _httpClient.PostJsonAsync<AccountSignUpResponse>($"{_configuration["ApiUrl"]}/identity/register", accountSignUpRequest);
                 if (tokenResponse.Success)
                 {
                     await _localStorageService.SetItemAsync(IAuthService.TokenLocalStorageKey, tokenResponse.Result.Token);

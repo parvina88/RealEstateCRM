@@ -1,6 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Microsoft.EntityFrameworkCore;
-using RealEstate.Domain.Entities;
 
 namespace RealEstate.Infrastructure.Data.Configurations;
 

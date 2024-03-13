@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-using RealEstate.Contract.Entrance;
-using RealEstate.Domain.Entities;
+﻿using RealEstate.Contract.Entrance;
 
 namespace RealEstate.Application.Common.Mapping;
 

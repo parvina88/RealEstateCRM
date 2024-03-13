@@ -1,8 +1,4 @@
-﻿using AutoMapper;
-using MediatR;
-using RealEstate.Contract.Building;
-using RealEstate.Domain.Entities;
-using RealEstate.Domain.Interfaces;
+﻿using RealEstate.Contract.Building;
 
 namespace RealEstate.Application.Buildings.Queries.GetBuildingList
 {

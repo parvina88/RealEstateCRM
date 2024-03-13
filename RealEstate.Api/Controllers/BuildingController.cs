@@ -14,22 +14,17 @@ namespace RealEstate.Api.Controllers
             return CreatedAtAction(nameof(Get), new { id = response.Id }, response);
         }
 
-        [Authorize]
         [HttpGet(ApiEndpoints.Building.Get)]
         public async Task<IActionResult> Get([FromRoute] Guid id, CancellationToken token)
         {
-            var query = new GetSingleBuildingQuery()
-            {
-                BuildingId = id
-            };
+            var query = new GetSingleBuildingQuery(id);
 
             var response = await Sender.Send(query, token);
 
             return response == null ? NotFound() : Ok(response);
         }
 
-        [Authorize]
-        [HttpGet(ApiEndpoints.Building.GetAll)]
+        [HttpGet(ApiEndpoints.Building.GetAll), Authorize]
         public async Task<IActionResult> GetAll(CancellationToken token)
         {
             var request = new GetBuildingsQuery();

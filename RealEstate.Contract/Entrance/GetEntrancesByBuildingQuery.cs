@@ -1,8 +1,3 @@
-﻿using MediatR;
+﻿namespace RealEstate.Contract.Entrance;
 
-namespace RealEstate.Contract.Entrance;
-
-public record GetEntrancesByBuildingQuery(Guid BuildingId) : IRequest<EntrancesResponse>
-{
-
-}
+public record GetEntrancesByBuildingQuery(Guid BuildingId) : IRequest<EntrancesResponse>;

@@ -1,7 +1,4 @@
-﻿using MediatR;
-using RealEstate.Domain.Enums;
-
-namespace RealEstate.Contract.Building;
+﻿namespace RealEstate.Contract.Building;
 
 public record CreateBuildingRequest : IRequest<SingleBuildingResponse>
 {

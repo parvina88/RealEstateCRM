@@ -1,6 +1,4 @@
-﻿using MediatR;
-
-namespace RealEstate.Contract.Entrance;
+﻿namespace RealEstate.Contract.Entrance;
 
 public record CreateEntranceRequest : IRequest<SingleEntranceResponse>
 {

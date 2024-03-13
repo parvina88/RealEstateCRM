@@ -1,5 +1,4 @@
-﻿using FluentValidation;
-using RealEstate.Contract.Apartment;
+﻿using RealEstate.Contract.Apartment;
 
 namespace RealEstate.Application.Apartments.Queries.GetApartmentsByStatus;
 

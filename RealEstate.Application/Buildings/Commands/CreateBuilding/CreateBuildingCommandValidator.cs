@@ -1,5 +1,4 @@
-﻿using FluentValidation;
-using RealEstate.Contract.Building;
+﻿using RealEstate.Contract.Building;
 
 namespace RealEstate.Application.Buildings.Commands.CreateBuilding;
 

@@ -1,7 +1,3 @@
-﻿using MediatR;
+﻿namespace RealEstate.Contract.Entrance;
 
-namespace RealEstate.Contract.Entrance;
-
-public record GetEntrancesQuery : IRequest<EntrancesResponse>
-{
-}
+public record GetEntrancesQuery : IRequest<EntrancesResponse>;

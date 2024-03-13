@@ -1,6 +1,8 @@
 ﻿using Blazored.LocalStorage;
 using RealEstate.Client.Services.Auth;
+using RealEstate.Domain.Exceptions;
 using System.Net.Http.Headers;
+using System.Net.Http.Json;
 
 namespace RealEstate.Client.Services.HttpClients
 {
@@ -8,16 +10,10 @@ namespace RealEstate.Client.Services.HttpClients
     {
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly ILocalStorageService _localStorageService;
-
         public HttpClientService(IHttpClientFactory httpClientFactory, ILocalStorageService localStorageService)
         {
             _httpClientFactory = httpClientFactory;
             _localStorageService = localStorageService;
-        }
-
-        public Task<ApiResponse> DeleteAsync(string url)
-        {
-            throw new NotImplementedException();
         }
 
         public async Task<ApiResponse<T>> GetJsonAsync<T>(string url, object content)
@@ -25,35 +21,83 @@ namespace RealEstate.Client.Services.HttpClients
             try
             {
                 using var _httpClient = await CreateHttpClient();
-                var response = await _httpClient.GetFromJsonAsync<T>(url, content);
-                return ApiResponse<T>.BuildSuccess(response);
+                var responseContent = await _httpClient.GetFromJsonAsync<T>(url, content);
+                return ApiResponse<T>.BuildSuccess(responseContent);
             }
             catch (HttpRequestException ex)
             {
-
                 return ApiResponse<T>.BuildFailed($"Server is not responding. {ex.Message}", ex.StatusCode);
             }
-
         }
 
-        public Task<ApiResponse<T>> PostJsonAsync<T>(string url, object request)
+        public async Task<ApiResponse> DeleteAsync(string url)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using var _httpClient = await CreateHttpClient();
+                var response = await _httpClient.DeleteAsync(url);
+                if (response.IsSuccessStatusCode)
+                    return ApiResponse.BuildSuccess();
+                return ApiResponse.BuildFailed("Error on sending response. Please try again later", response.StatusCode);
+            }
+            catch (HttpRequestException ex)
+            {
+                return ApiResponse.BuildFailed($"Server is not responding. {ex.Message}", ex.StatusCode);
+            }
         }
 
-        public Task<ApiResponse<T>> PutJsonAsync<T>(string url, object request)
+        public async Task<ApiResponse<T>> PostJsonAsync<T>(string url, object content)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using var _httpClient = await CreateHttpClient();
+                var response = await _httpClient.PostAsJsonAsync(url, content);
+                return await GetApiResponseAsync<T>(response);
+            }
+            catch (HttpRequestException ex)
+            {
+                return ApiResponse<T>.BuildFailed($"Server is not responding. {ex.Message}", ex.StatusCode);
+            }
+        }
+
+        public async Task<ApiResponse<T>> GetApiResponseAsync<T>(HttpResponseMessage response)
+        {
+            if (response.IsSuccessStatusCode)
+            {
+                var responseContent = await response.Content.ReadFromJsonAsync<T>();
+                return ApiResponse<T>.BuildSuccess(responseContent);
+            }
+            else if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+            {
+                ErrorResponse responseContent = await response.Content.ReadFromJsonAsync<ErrorResponse>();
+                return ApiResponse<T>.BuildFailed(responseContent, response.StatusCode);
+            }
+            return ApiResponse<T>.BuildFailed("Error on sending response. Please try again later", response.StatusCode);
+        }
+
+        public async Task<ApiResponse<T>> PutJsonAsync<T>(string url, object content)
+        {
+            try
+            {
+                using var _httpClient = await CreateHttpClient();
+                var response = await _httpClient.PutAsJsonAsync(url, content);
+                return await GetApiResponseAsync<T>(response);
+            }
+            catch (HttpRequestException ex)
+            {
+                return ApiResponse<T>.BuildFailed($"Server is not responding. {ex.Message}", ex.StatusCode);
+            }
         }
 
         private async Task<HttpClient> CreateHttpClient()
         {
-            var _httpClient = _httpClientFactory.CreateClient("We");
-            string? token = await _localStorageService.GetItemAsync<string>(IAuthService.TokenLocalStorageKey);
-
+            var _httpClient = _httpClientFactory.CreateClient();
+            string token = await _localStorageService.GetItemAsync<string>(IAuthService.TokenLocalStorageKey);
             if (!string.IsNullOrEmpty(token))
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             return _httpClient;
         }
+
+
     }
 }

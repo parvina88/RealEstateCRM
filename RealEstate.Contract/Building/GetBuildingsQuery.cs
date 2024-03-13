@@ -1,8 +1,3 @@
-﻿using MediatR;
+﻿namespace RealEstate.Contract.Building;
 
-namespace RealEstate.Contract.Building;
-
-public record GetBuildingsQuery : IRequest<BuildingsResponse>
-{
-
-}
+public record GetBuildingsQuery : IRequest<BuildingsResponse>;

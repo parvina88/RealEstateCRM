@@ -1,8 +1,4 @@
-﻿using FluentValidation;
-using MediatR;
-using RealEstate.Domain.Exceptions;
-
-namespace RealEstate.Application.Behaviors;
+﻿namespace RealEstate.Application.Behaviors;
 
 public class ValidationPipelineBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
 {
