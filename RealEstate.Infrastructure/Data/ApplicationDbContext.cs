@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using RealEstate.Infrastructure.Identity;
 using System.Reflection;
 
 namespace RealEstate.Infrastructure.Data;
