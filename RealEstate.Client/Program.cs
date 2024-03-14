@@ -1,7 +1,6 @@
 using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
-using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using RealEstate.Client;
 using RealEstate.Client.Authentication;
@@ -14,21 +13,25 @@ var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
-builder.Services.AddScoped<IHttpClientService, HttpClientService>();
-builder.Services.AddScoped<IBuildingService, BuildingService>();
-builder.Services.AddScoped<IAuthService, AuthService>();
-
-builder.Services.AddHttpClient("RealEstate.Api", client =>
-    client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress))
-    .AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>();
-
-// Supply HttpClient instances that include access tokens when making requests to the server project
-builder.Services.AddScoped(sp => 
-sp.GetRequiredService<IHttpClientFactory>().CreateClient("RealEstate.Api"));
-
 builder.Services.AddCascadingAuthenticationState();
 
+builder.Services.AddAuthorizationCore();
+
+builder.Services.AddScoped<IAuthService, AuthService>();   
+builder.Services.AddScoped<IHttpClientService, HttpClientService>();
+builder.Services.AddScoped<IBuildingService, BuildingService>();
+
 builder.Services.AddScoped<AuthenticationStateProvider, ApiAuthenticationStateProvider>();
+// register the account management interface
+builder.Services.AddScoped(
+    sp => (IHttpClientFactory)sp.GetRequiredService<AuthenticationStateProvider>());
+
+// configure client for auth interactions
+//builder.Services.AddHttpClient(
+//    "Auth",
+//    opt => opt.BaseAddress = new Uri(builder.Configuration["BackendUrl"] ?? "https://localhost:5001"))
+//    .AddHttpMessageHandler<IHttpClientService>();
+
 
 builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddHttpClient();

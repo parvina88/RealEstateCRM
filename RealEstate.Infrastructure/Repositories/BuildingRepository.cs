@@ -7,7 +7,7 @@ public class BuildingRepository(IApplicationDbContext context) : IBuildingReposi
     public async Task<bool> CreateAsync(Building building, CancellationToken token = default)
     {
         await _context.Buildings.AddAsync(building, token);
-        return await _context.SaveChangesAsync() > 0;
+        return await _context.SaveChangesAsync(token) > 0;
     }
 
     public async Task<Building?> GetAsync(Guid id, CancellationToken token = default)
