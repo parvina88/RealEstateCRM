@@ -8,17 +8,35 @@
 
 @inject IBuildingService _buildingService
 
-<h3>Buildings</h3>
+<h2 style="padding-bottom: 40px">Объекты</h2>
 
-@foreach (var building in buildings)
+@* @foreach (var building in buildings)
 {
-    <div class="card">
+    <div class="card" style="width: 250px">
+        <img src="building_image.jpg" class="card-img-top" alt="Building Image">
         <div class="card-body">
             <h5 class="card-title">@building.Name</h5>
             <p class="card-text">@building.Address</p>
+            <p class="card-text">Description of the building goes here.</p>
+            <a href="#" class="btn btn-primary">Добавить квартиры</a>
         </div>
     </div>
 }
+ *@
+<div class="overflow-auto">
+    @foreach (var building in buildings)
+    {
+        <div class="card" style="width: 250px; flex: 0 0 auto;">
+            <img src="building_image.jpg" class="card-img-top" alt="Building Image">
+            <div class="card-body">
+                <h5 class="card-title">@building.Name</h5>
+                <p class="card-text">@building.Address</p>
+                <p class="card-text">Description of the building goes here.</p>
+                <a href="#" class="btn btn-primary">Добавить квартиры</a>
+            </div>
+        </div>
+    }
+</div>
 
 @code {
     private List<SingleBuildingResponse> buildings = new();

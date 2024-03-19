@@ -74,6 +74,7 @@ app.UseCors("wasm");
 app.UseAuthorization();
 
 app.MapGroup("/account").MapIdentityApi<IdentityUser>();
+
 app.MapControllers();
 
 app.Run();

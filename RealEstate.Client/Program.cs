@@ -23,8 +23,8 @@ builder.Services.AddScoped<IBuildingService, BuildingService>();
 
 builder.Services.AddScoped<AuthenticationStateProvider, ApiAuthenticationStateProvider>();
 // register the account management interface
-builder.Services.AddScoped(
-    sp => (IHttpClientFactory)sp.GetRequiredService<AuthenticationStateProvider>());
+//builder.Services.AddScoped(
+//    sp => (IHttpClientFactory)sp.GetRequiredService<AuthenticationStateProvider>());
 
 // configure client for auth interactions
 //builder.Services.AddHttpClient(
@@ -32,6 +32,7 @@ builder.Services.AddScoped(
 //    opt => opt.BaseAddress = new Uri(builder.Configuration["BackendUrl"] ?? "https://localhost:5001"))
 //    .AddHttpMessageHandler<IHttpClientService>();
 
+builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
 builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddHttpClient();

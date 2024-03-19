@@ -24,7 +24,7 @@ namespace RealEstate.Api.Controllers
             return response == null ? NotFound() : Ok(response);
         }
 
-        [HttpGet(ApiEndpoints.Building.GetAll), Authorize]
+        [HttpGet(ApiEndpoints.Building.GetAll)]
         public async Task<IActionResult> GetAll(CancellationToken token)
         {
             var request = new GetBuildingsQuery();
